@@ -9,9 +9,9 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: /tex/beleg/vorlage.tex
+          root_file: /tex/folien/main.tex
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
           name: PDF
-          path: beleg11-webanwendungen-mit-solid.pdf
+          path: beleg11-webanwendungen-mit-solid-presentation.pdf
