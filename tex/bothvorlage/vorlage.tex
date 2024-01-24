@@ -2,7 +2,6 @@
 \documentclass[acmtog]{acmart}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc} 
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -29,7 +28,7 @@
 %%
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
-\title{Beleg 11 Datensouveräne Web-Anwendungen mit der Solid Technologie Social Linked Data}
+\title{The Name of the Title is Hope}
 
 %%
 %% The "author" command and its associated commands are used to define
@@ -37,236 +36,438 @@
 %% Of note is the shared affiliation of the first two authors, and the
 %% "authornote" and "authornotemark" commands
 %% used to denote shared contribution to the research.
+\author{A-Vorname A-Nachname}
 \authornote{Alle Studierenden trugen zu gleichen Teilen zu dieser Arbeit bei.}
-\author{Anna Denzel}
+\author{B-Vorname B-Nachname}
 \authornotemark[1]
-\author{Istvan J. Mocsy}
-\authornotemark[1]
-\author{Alexander Reiprich}
+\author{C-Vorname C-Nachname}
 \authornotemark[1]
 \affiliation{%
   \institution{Hochschule für Technik, Wirtschaft und Kultur Leipzig (HTWK Leipzig)}
   \streetaddress{Karl-Liebknecht-Str. 132}
   \city{Leipzig}
+  %\state{Ohio}
   \country{Deutschland}
   \postcode{04277}
 }
 %%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{A-Nachname, B-Nachname und C-Nachname}
+
+%%
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Am 20. Dezember 1990 wurde die erste Website\footnote{Rekonstruktion: \url{http://info.cern.ch/hypertext/WWW/TheProject.html}} von Sir Timothy John Berners-Lee zur Verfügung gestellt. Seit dem hat sich das World Wide Web zu einem nicht mehr wegzudenkendem Aspekt des alltäglichen Lebens entwickelt. Mit dieser Entwicklung kommen neben Innovationen, welche das Leben erleichtern, auch Gefahren zum Vorschein. Berners-Lee selbst hat 2017, zum 28. Geburtstag  des WWW in einem Brief\footnote{\url{https://webfoundation.org/2017/03/web-turns-28-letter/}} die drei wichtigsten Probleme für das Web benannt. Eines dieser Probleme lautet "Wir haben die Kontrolle über unsere persönlichen Daten verloren". Um diese Kontrolle wiederzuerlangen, wird unter der Leitung von Berners-Lee seit 2015 die Spezifikation Solid (Social Linked Data) entwickelt, welche eine Technologie für sichere, dezentralisierte Speicherung von Daten jeglicher Art bereitstellt. Dieser Beleg beschäftigt sich mit den Grundprinzipien von Solid und soll einen Überblick über die Technologie schaffen. Ebenfalls werden Vor- und Nachteile des momentanen zentralisierten Konzepts, wie auch eines potenziell zukünftigen dezentralisierten Konzepts mit Solid beleuchtet.
+  (Abstract-Länge ist typischerweise 15-25 Zeilen lang, in der PDF-Darstellung) 
+  
+  A clear and well-documented \LaTeX\ document is presented as an
+  article formatted for publication by ACM in a conference proceedings
+  or journal publication. Based on the ``acmart'' document class, this
+  article presents and explains many of the common variations, as well
+  as many of the formatting elements an author may use in the
+  preparation of the documentation of their work.
 \end{abstract}
 
 \maketitle
 
 \section{Einleitung und Motivation}
 
-1989 hat Tim Berners-Lee mit der Entwicklung des Hypertext Transfer Protocol(HTTP) sowie der Hypertext Markup Language(HTML) den Grundstein für das World Wide Web(WWW) gesetzt und es damit möglich gemacht, Informationen global in Sekundenschnelle zu teilen.\cite{birth-web}
+(Beschreibung von Kontext, Problemen, Anforderungen und Zielen) 
 
-Seit dem ist viel geschehen - das Web hat fast alle Lebensbereiche weltweit durchdrungen und unseren Umgang mit Informationen grundlegend verändert. Das World Wide Web hat es möglich gemacht Informationen praktisch sofort global erreichbar zu machen - ob es die neuste medizinische Erkenntnis, veröffentlicht in einem Paper, oder die Geburt des Neffen am anderen Ende der Welt ist. Mit dem Wachstum des WWW ist dieses wesentlich komplexer geworden und muss sich mit Themen wie Authentifizierung, Datenspeicherung, Datenverlinkung und Datenschutz beschäftigen. Aktuell können über das WWW viele verschiedene Anwendungen und Dienstleistungen verwendet werden, welche von vielen verschiedenen Unternehmen global entwickelt und gewartet werden. Dies resultiert in einem komplex aufgesponnenen Netz an Anwendungen und angebotenen Dienstleistungen, welche Funktionalitäten entweder selbst entwickeln oder von anderen Anbietern integrieren, was zu unzähligen unterschiedlichen Protokollen, Systemen und Datensilos führt. Dieser zentralisierte Ansatz, so bezeichnet, weil die Daten und Dienstleistungen für die einzelnen Anwendungen zentral bei ihrem Entwickler oder Dienstleistern von diesem liegen, ist aber nicht der einzige Ansatz, wie das World Wide Web aufgespannt sein könnte. 
-\todo[inline]{Unten stehender Satz muss besser formuliert werden, da gerade Semantic Web sich nicht so anhören darf, als hätte TBL sich das spontan ausm Ärmer geschüttelt. Ich überlege während ich weiterschreibe}
-Tim Berners-Lee hat, nach der Entwicklung des WWW selbst, das Semantic Web ins Leben gerufen, und basierend auf diesem Social Linked Data, kurz Solid, entwickelt.
+ACM's consolidated article template, introduced in 2017, provides a
+consistent \LaTeX\ style for use across ACM publications, and
+incorporates accessibility and metadata-extraction functionality
+necessary for future Digital Library endeavors. Numerous ACM and
+SIG-specific \LaTeX\ templates have been examined, and their unique
+features incorporated into this single new template.
 
-In diesem Beleg werden zuerst in Kapitel \ref{section:relatedWork} relevante Publikationen in diesem Themengebiet vorgestellt. In Kapitel \ref{section:wasIstSocialLinkedData} werden die theoretischen Grundlagen zusammen gefasst und es wird erklärt, worum genau es sich bei der Technologie handelt. Kapitel \ref{section:wasSindDatensouveräneWebanwendungen} geht auf datensouveräne Webanwendungen ein und wie diese mit der Solid Technologie entwickelt werden können. Anschließend werden die Probleme des aktuell gängigen zentralisierten Konzepts in Kapitel \ref{section:problemeUndGefahrenDesAktuellenZentralisiertenKonzepts} aufgezeigt. Kapitel \ref{section:wasSindDieVorteileVonSolid} geht auf das Potential der Solid Technologie ein, besonders bezogen auf den Effekt bei einem globalen Einsatz, auch in großen Entwicklungsteams. Darauf folgend wird in Kapitel \ref{section:standDerForschung} der aktuelle Stand der Forschung zusammengefasst und in Kapitel \ref{section:implementierungEinerBeispielanwendung} dann in einer Beispielanwendung eingesetzt. Danach werden in Kapitel \ref{section:wasSindPotentiellePitfallsUndGefahren} die potentiellen Pitfalls und Gefahren aufgezeigt. Abschließend schneidet Kapitel \ref{section:alternativeKonzepte} ein paar alternative Konzepte an, welche auch mit Solid kombiniert werden können, und Kapitel \ref{section:zukunftsausblick} gibt einen kurzen Ausblick in die Zukunft.
+If you are new to publishing with ACM, this document is a valuable
+guide to the process of preparing your work for publication. If you
+have published with ACM before, this document provides insight and
+instruction into more recent changes to the article template.
 
-\label{section:relatedWork}
-\section{Related Work: andere Paper und was die da gemacht haben (unsere Quellen)}
- \todo[inline]{Zum Schluss/ Während die Quellen an den richtigen Stellen integriert werden}
+The ``\verb|acmart|'' document class can be used to prepare articles
+for any ACM publication --- conference or journal, and for any stage
+of publication, from review to final ``camera-ready'' copy, to the
+author's own version, with {\itshape very} few changes to the source.
 
-Der Solid Technologie liegen unter anderem die Konzepte Linked Data und das Semantic Web zugrunde. Diese wurden schon vor der Entwicklung der Solid-Technologie definiert \cite{blumauer2006semantic}.
-In 2016 haben Sambra et al. eine Solid Beispielanwendung basierend auf schon definierten W3C Protokollen implementiert und so gezeigt, dass mit dem neuen Paradigma ein dezentralisiertes Netz an Sozialen Webanwendungen realisierbar ist \cite{sambra2016solid}.
-Es gibt viele weitere Wissenschaftler:innen, die sich mit der Technologie und ihren Einsatzmöglichkeiten auseinandersetzen, darunter auch ...
-Solid in Kombination mit Blockchain zur Verifizierung ~\cite{ramachandran2020towards}
-Entwicklung von dezentralisierten Soziale Netzwerke~\cite{yeung2023decentralization}.
-Solid Data Spaces ~\cite{meckler2023web}
-- Paper von Both 
+(kurze Zusammenfassung der Struktur der Belegarbeit)
 
-\label{section:wasIstSocialLinkedData}
-\section{Was ist Social Linked Data?}
+Diese Arbeit ist folgendermaßen strukturiert. 
+In Kapitel ... 
+...
+...
+Abschließend ...
 
-Um die Frage "Was ist Social Linked Data?" beantworten zu können, muss man zuerst festlegen, wie der Begriff Daten im Web definiert ist, und in welchem Kontext er verwendet wird. Tim Berners-Lee unterscheidet in seinem TED-Beitrag "The next Web of open, lined data" den Begriff "Dokument" von dem Begriff "Daten". Als Dokument werden Seiten im Internet bezeichnet, während Daten die Informationen in diesen Dokumenten sind. 
+\section{Grundlagen}
 
-Berners-Lee beschreibt, dass Daten an sich nicht nutzbar sind, wenn sie nicht implementiert und visualisiert werden. Ebenfalls ist die Menge an Daten essentiell, um sie verwenden zu können. Der Begriff, den er in diesem Beitrag vorstellt, heißt "Linked Data", welcher beschreibt, dass alle Informationen im World Wide Web zu finden, und miteinander verknüpft sind, um durch diese Menge an Daten den Nutzen des Internets zu maximieren~\cite{TED.2010}.
+(Begriffe und Definitionen)
 
-Die wichtigste Faktoren sind dabei die Beziehungen, mit welchen die Daten untereinander verknüpft sind, um effizient auf alle zugehörigen Daten zu einem Thema zugreifen zu können. Existieren alle Informationen im Internet, und sind diese untereinander verbunden, befindet sich das gesamte menschliche Wissen an einem Ort, anstatt verstreut in persönlichen Datenbanken. Dies soll beispielsweise in der Wissenschaft genutzt werden können, um Fragen zu beantworten, die durch normale Suchmaschinen nicht beantwortet werden können, da noch niemand diese spezifische Frage gestellt hat. Durch die Verlinkung von Daten soll dies auf Grund der enormen Anzahl an Informationen möglich sein, welche sonst verstreut und unzugänglich wäre ~\cite{TED.2010}.
+As noted in the introduction, the ``\verb|acmart|'' document class can
+be used to prepare many different kinds of documentation --- a
+dual-anonymous initial submission of a full-length technical paper, a
+two-page SIGGRAPH Emerging Technologies abstract, a ``camera-ready''
+journal article, a SIGCHI Extended Abstract, and more --- all by
+selecting the appropriate {\itshape template style} and {\itshape
+  template parameters}.
 
-Die Bezeichnung "Social" von Social Linked Data bezieht sich dabei auf die Verwendung des Linked Data Konzeptes bei persönlichen Daten. Ähnlich wie bei wissenschaftlichen Themenbereichen, können auch beispielsweise Beziehungen zwischen Personen als Daten gespeichert werden. Berners-Lee beschreibt, dass durch die Nutzung dieser Technik, sowohl Social Media Plattformen, als auch die Nutzer:innen dieser profitieren, da so die Grenzen zwischen den Plattformen aufgelöst, und eine Interoperabilität hergestellt werden kann. Ziel ist es, dass jede:r Nutzer:in seinen Teil zu diesem Projekt beiträgt, und ihr Wissen dem World Wide Web bereitstellt, um einem vollständigen, verbundenen Internet einen Schritt näher zu kommen  ~\cite{TED.2010}.
+This document will explain the major features of the document
+class. For further information, the {\itshape \LaTeX\ User's Guide} is
+available from
+\url{https://www.acm.org/publications/proceedings-template}.
 
-% - World Wide Web: Documents on the web
-% - Social Linked Data: Data on the Web
-% - Data can't be naturally used by itself but needs to be visualized etc.
-% - Having a lot of data is very important -> when everyone has put data online -> Linked Data
-% - Data is relationships
-% - Semantic Data (web) 
-% - Data comes in lots of different forms
-% - Allows to search for data that answers questions that haven't be asked before
-% - Linked data is about everybody doing their bit and that data being connected with everything else
-% ~\cite{TED.2010}
+\subsection{Template Styles}
 
-\todo[inline]{Herkunft Social Linked Data: Ursprung Facebook entmachten}
+The primary parameter given to the ``\verb|acmart|'' document class is
+the {\itshape template style} which corresponds to the kind of publication
+or SIG publishing the work. This parameter is enclosed in square
+brackets and is a part of the {\verb|documentclass|} command:
+\begin{verbatim}
+  \documentclass[STYLE]{acmart}
+\end{verbatim}
 
-A decentralized social networking framework described is based on open, technologies
-such as Linked Data [Berners-Lee 2006], Semantic Web ontologies, open single-signon identity systems, and access control. ~\cite{yeung2023decentralization}
-
-Solid ist eine dezentralisierte Plattform für Soziale Webanwendungen. Die Daten der Nutzer:innen werden unabhängig von diesen verwaltet und in einem über das Web erreichbaren, persönlichen Datastore gespeichert. Diverse Webanwendungen können dann auf die in ihrem persönlichen Speicherservice, oder auch Pod (Personal Online Datastore) genannt, gespeicherten Daten zugreifen.
-
-Dieser Service kann entweder auf einer eigenen Maschine aufgesetzt und verwaltet werden, oder man nutzt den Service eines sogenannten Pod-Providers. Sambra et al.~\cite{sambra2016solid} vergleichen diese Pod-Provider in ihrem ursprünglichen Paper mit Firmen, welche Cloudspeicher bereitstellen, wie beispielsweise Dropbox.
-
-Die Nutzer:innen können ihre Pods nicht nur direkt selbst managen, sondern auch mehrere Pods gleichzeitig bei verschiedenen Pod Service Anbietern erstellen und verwenden und hierbei auch Berechtigungen - welche Anwendungen beispielsweise auf welche Daten zugreifen können - festlegen.
-
-Webentwickler:innen können dann das Solid Protokoll nutzen um auf die in den Pods gespeicherten Daten zuzugreifen. Das Solid Protokoll basiert hierbei auf existierenden W3C Vorschlägen.
-
-Sowohl Nutzer:innen als auch Anwendungen haben hierbei Zugriff auf die Daten, unabhängig davon wo genau die Pods sich tatsächlich befinden.~\cite{sambra2016solid}
-
-Um Daten effizient speichern zu können muss eine Technologie bestehen, welche diese Daten sinnvoll verwalten kann. Solid basiert dabei auf RDF und anderen Technologien des Semantic Webs. RDF steht für "Resource Description Framework" und bezeichnet eine Methodik, mit welcher Informationen im Internet repräsentiert werden. Dabei wird ein graphenbasiertes Datenmodell angewandt, welches aus Knoten besteht. Diese Knoten können zu Tripeln zusammengefasst werden, sodass ein Beziehung entsteht, welche man mit der "Subjekt-Prädikat-Objekt"-Struktur beschreiben kann.~\cite{Wood:14:RCA, Bizer2009LinkedD} 
-
-Beide Knoten, also das Subjekt und das Objekt, als auch das Prädikat sind sogenannte Ressourcen. Eine Ressource kann vereinfacht gesagt alles sein - ein Gegenstand, ein Konzept, eine Zahl, ein Wert oder eine Eigenschaft um einige Beispiele zu nennen. Verbindet man nun zwei Knoten mit einer Eigenschaft setzt man diese in Beziehung, und ein Tripel, auch RDF Statement genannt, entsteht. Dabei nimmt ein Knoten die Rolle des Subjekts an, während das andere die des Objekts annimmt. Die Eigenschaft, also das Prädikat, beschreibt nun den Zusammenhang zwischen den Knoten.~\cite{Wood:14:RCA, Bizer2009LinkedD}
-
-Für weitere Informationen zu RDF und anderen Ontologien wird auf das Handbook on Ontologies (2009) von Steffen Staab und Rudi Studer verwiesen.~\cite{staab2009handbook}
-
-Während die Dezentralisierung von persönlichen Daten ein relevanter Aspekt von Solid ist, ist schnell ersichtlich geworden, dass das Konzept aufgrund der Modularisierung und Dezentralisierung verschiedener benötigter Funktionalitäten von Webanwendungen und dem damit einhergehenden Vernetzungscharakter und die Interoperabilität ein enormes Wachstumspotential hat.
-
-\label{section:wasSindDatensouveräneWebanwendungen}
-\section{Was sind datensouveräne Webanwendungen?}
-In SoK: Data Sovereignty Kapitel 2. Overview - Data Sovereignty~\cite{cryptoeprint:2023/967} beschreiben Ernstberger et. al zentrale Aspekt von datensouveränen Frameworks und Anwendungen - hier Webanwendungen - den Nutzer:innen die volle Kontrolle über die Verwendung und Speicherung ihrer personenbezogenen Daten zu gewährleisten. Hierbei können die Nutzer:innen sämtliche Anpassungen und Verwendungsfälle ihrer Daten verfolgen und anpassen. Damit sind Nutzer:innen in der Lage Verletzungen ihrer Privatsphäre zu erkennen und vorzubeugen.
-
-Der Wunsch, Datensouveränität durchzusetzen begründet sich in dem Ziel/Wunsch eine dezentralisierte Gesellschaft zu haben, die vollständig von ihren Nutzer:innen kontrolliert wird. 
-
-Datensouveränität lässt sich noch weiter aufschlüsseln und modellieren, wie von Ernstberger et. al.~\cite{cryptoeprint:2023/967} beschrieben.
-
-\inline{Datensouveränität allgemein sehen, nicht nur auf Einzelperson (Da ist Datenschutz)
-Ich will effizient, automatisiert Daten verarbeiten -> das geht mit Solid
-Man kann direkt einsteigen und datensouverän mit Anbietern arbeiten
--> Data Recycling, Data Reuse
-klassisch Datenmüll, Inkonsistenzen -> Solid ist in RDF mit fester Id und Webadresse -> mit den richtigen Rechten ist es wieder auflösbar}
-
-\label{section:problemeUndGefahrenDesAktuellenZentralisiertenKonzepts}
-\section{Probleme und Gefahren des aktuellen zentralisierten Konzepts}
-Daten zentralisiert zu speichern bringt einige Probleme und Gefahren mit sich. Als direktes Resultat des zentralisierten Speichern von Daten kann man das Konzept des Überwachungskapitalismus betrachten. In dem Buch "Das Zeitalter des Überwachungskapitalismus" von Shoshana Zuboff beschreibt die Autorin den Begriff wie folgt: 
-
-\textit{"Überwachungskapitalismus beansprucht einseitig menschliche Erfahrung als Rohstoff zur Umwandlung in Verhaltensdaten. Ein Teil dieser Daten dient der Verbesserung von Produkten und Diensten, den Rest erklärt man zu proprietärem Verhaltensüberschuss, aus dem man [...] Vorhersageprodukte fertigt, die erahnen, was sie jetzt, in Kürze oder irgendwann tun."}~\cite{zuboff2018ueberwachungskapitalismus}.
-
-Große Unternehmen nutzen also die Daten von Nutzer:innen um basierend darauf Vorhersagen zu treffen, wie der/die Nutzer:in handelt. Diese Prognosen können dann an Werbetreibende verkauft werden - je genauer und je wahrscheinlicher es ist, dass der/die Nutzer:in so handelt wie vorhergesagt, desto mehr steigt die Prognose an Wert. So ist es den Unternehmen möglich, Verhalten der Nutzer:innen zu lenken und so Kaufentscheidungen etc. zu beeinflussen ~\cite{zuboff2018ueberwachungskapitalismus}.
-
-Dies führt aber auch zu anderen Problemen - 2018 wurde bekannt, dass das Datenanalyse-Unternehmen Cambridge Analytica basierend auf Facebook-Daten Einfluss in der US-Präsidentschaftswahl 2016 hatte. Als Teil der Wahlkampagne Donald Trumps wurden Nutzer:innen durch sogenanntes "micro-targeting" politisch beeinflusst, was zu einem Wahlerfolg Trumps geführt haben könnte ~\cite{isaak2018cambridgeanalytica}. Weiter wird das Thema in dem Projekt und dem gleichnamigen Film "The Social Dilemma" ausgeführt, in welchem gezeigt wird, wie große Tech-Unternehmen mit Nutzerdaten sammeln und diese durch Algorithmen aufbereiten, um Geld zu verdienen.
-\todo[inline]{ Quelle hinzufügen - Reicht die offizielle Website oder der Film als Quelle?  --> Istvan: es gibt @movie wohl für bibtex, aber ich weiß nicht ob man sich das irgendwo zu filmen generieren lassen kann. }
-
-Neben den Nachteilen im Bezug auf Nutzerdaten gibt es weitere betriebswirtschaftliche und technische Aspekte, welche gegen die Nutzung einer zentralisierten Datenspeicherung sprechen. Ein wichtiger Punkt ist, dass ein zentrale Speicherung der Daten ein sogenannter Single Point of Failure ist. Gibt es technische Probleme, oder der Server, worauf die Daten gespeichert sind, ist aus anderen Gründen nicht erreichbar, ist die Anwendung nicht oder nur stark eingeschränkt nutzbar. Werden Daten dezentral gespeichert, wie beispielsweise unter Nutzung des Solid-Konzepts, existiert dieser Single Point of Failure in dieser Form nicht mehr. Wenn Server ausfallen, auf denen Pods gehostet werden, ist bei der richtigen Anwendung des Solid-Konzepts nur ein kleiner Teil der Daten betroffen.
-
-Mit der Nutzung eines zentralisierten Datenspeicherungsverfahrens geht die aktive Wartung eines solchen einher. Dies resultiert in Aufgaben wie beispielsweise Skalierbarkeit des Datenspeichers, der Versionsverwaltung oder Archivierung. Dies sind Aspekte, die einem Unternehmen nicht nur Geld sondern auch Zeit kosten. Besonders der Aspekt der nachträglichen Skalierung ist ein essentieller Punkt und kann sich für wachsende Unternehmen als Herausforderung herausstellen, wenn sich damit nicht ausreichend auseinandergesetzt wird.
-Daraus kann man ebenfalls das erhöhte Fehlerpotential ableiten, welches bei einem zentralisierten Konzept einkalkuliert werden muss. Wird das Datenmangement vernachlässigt oder inadäquat betrieben, kann sich dies massiv auf die Leistung der Anwendung auswirken. Auch hier kann man wieder auf den Single Point of Failure verweisen. Durch das Solid-Konzept können diese Probleme vermieden werden. Datenmanagement wird so einfacher, da Änderungen der Daten nicht auf dem eigenen Server stattfinden, sondern von den Verwalter:innen der einzelnen Pods. 
-
-Betrachtet man das gesamte Netz, verursacht ein zentralisiertes Konzept viel Datenmüll. Unternehmen speichern Daten, welche viele andere Unternehmen bereits ebenfalls gespeichert haben. Bei der vorgesehenen Nutzung des Solid-Konzepts existieren keine Kopien von Daten, da diese für die Verarbeitung von den jeweiligen Pods angefragt und verwendet werden. So existieren die Daten nur einmalig im Pod und nicht vielfach auf verschiedenen Servern von unterschiedlichen Firmen, was zur Folge hat, dass Unternehmen Speicherplatz einsparen können.
-
-\todo[inline] { Nachteile zentralisiertes Konzept:
-- Zentralisierte Daten bedeutet höheres Verlustrisiko (Single Point of Failure)
-- Zentralisierte Systeme erfordern Management, was zeitliche und monetäre Kosten zur Folge hat 
--> Themen wie Skalierbarkeit sind wichtig
-- Potential für Fehler ist höher und Kosten können steigen (bspw. durch schlechtes Datenmanagement)
-(- Zugriffsgeschwindigkeit ist langsamer, da alle Datenanfragen auf einen Server laufen)
-(- Data Breaches/Leaks sind wahrscheinlicher, da Nutzerdaten vielfach auf vielen Servern von unterschiedlichen Firmen existieren)    
-}
-\inline{Auch nachteile von Solid
--> Wenn nur Ref auf Daten und Daten fehlen oder Rechte fehlen inzwischen. -> Gibt es Lösungsansätze oder Forschungsfragen
--> Freigabeprozesse für Solid dauern lange
-}
-
-% Inferiert:
-% Ein weiterer Nachteil, welcher das aktuelle zentralisierte Konzept gegenüber Solid hat, ist dass die Nutzer:innen ihre Daten nur eingeschränkt selbst manipulieren können. Beispielsweise können Konklusionen über Verhaltensmuster der Nutzer:innen gezogen werden, welche sich nicht direkt von den Nutzer:innen anpassen lassen - die Algorithmen, für beispielsweise personalisierte Inhalte und Werbung rechnen aber basierend auf diesen Informationen und die Resulate sind womöglich unerwünscht. Zb. Wenn jemand mit Rauchen aufhören möchte aber die ganze Zeit Zigarettenwerbung und Rauchercontent bekommt oder so
-
-% Außerdem verursacht die Speicherung von Nutzerdaten von verschiedenen Unternehmen riesige Mengen an Datenmüll - alles wird unnötig mehrfach gespeichert.
-
-% - Daten nicht direkt bearbeitbar von User:innen
-% Viel Datenmüll, mehrfach gespeicherte Daten etc. 
-
-\label{section:wasSindDieVorteileVonSolid}
-\section{Was sind die Vorteile von SOLID?}
-
-\inline{Alles lässt sich kombinieren und neue Funktionalitäten schaffen
-Was brauchen wir dafür Datenformate, Webstandards; 
-Alleine geht auch monolithisches System, bei zb 100 Leuten mit X neuen Features ist monolith 100000 komplexer
-Verschiedene Anwendungen mit den gleichen Blöcken bedienen ("Netz an Dreiecken"); Ad-hoc, Dynamisch
-}
+Journals use one of three template styles. All but three ACM journals
+use the {\verb|acmsmall|} template style:
 \begin{itemize}
-    \item Rollen- und Akteurenautorisierung und -authentifizierung\cite{8633673}
-    \item his paper presents how these problems can be solved by adopting a decentralized approach to online social networking. With
-this approach, users do not have to be bounded by a particular social networking service. This can provide the same or even
-higher level of user interaction as with many of the popular social networking sites we have today\cite{yeung2023decentralization}
+\item {\verb|acmsmall|}: The default journal template style.
+\item {\verb|acmlarge|}: Used by JOCCH and TAP.
+\item {\verb|acmtog|}: Used by TOG.
 \end{itemize}
 
-Ein Solid-Ökosystem stellt einige Anforderungen an die entwickelten Anwendungen und Systeme. Dazu zählen standardisierte Protokolle und Datenformate, welche Schnittstellen (Interfaces) für die verschiedenen Services und Anwendungen im Ökosystem definieren. Sämtliche Kommunikation zwischen den verschiedenen Modulen läuft über diese Schnittstellen. So ist zum Beispiel die Kommunikation zwischen Pod-Provider und Webanwendung fest definiert. Damit können sowohl Pod-Provider als auch Webanwendungen einfach ausgetauscht oder erweitert werden. 
+The majority of conference proceedings documentation will use the {\verb|acmconf|} template style.
+\begin{itemize}
+\item {\verb|acmconf|}: The default proceedings template style.
+\item{\verb|sigchi|}: Used for SIGCHI conference articles.
+\item{\verb|sigchi-a|}: Used for SIGCHI ``Extended Abstract'' articles.
+\item{\verb|sigplan|}: Used for SIGPLAN conference articles.
+\end{itemize}
 
-Dieses Konzept kann auf große Solid-Ökosysteme hoch skaliert werden, für die ohne größere Absprache Anwendungen und Services entwickelt werden können, die über die definierten Protokolle einfach Zugriff zu den anderen Komponenten des Systems bekommen und so autorisieren, authentifizieren und auf persönliche Daten zugreifen können, ohne ein eigenes Authentifizierungssystem oder einen externen Service, wie beispielsweise ein Login über Facebook, integrieren zu müssen. Somit geht mit den definierten Standards eine hohe Interoperabilität innerhalb des Solid-Ökosystems einher.
-\cite{8633673}
+\subsection{Template Parameters}
 
-\inline{2 Quelle hinzufügen / teilweise selbst geschlussfolgert}
+In addition to specifying the {\itshape template style} to be used in
+formatting your work, there are a number of {\itshape template parameters}
+which modify some part of the applied template style. A complete list
+of these parameters can be found in the {\itshape \LaTeX\ User's Guide.}
 
-Die dezentralisierte Lagerung der Daten ... \cite{8633673}
+Frequently-used parameters, or combinations of parameters, include:
+\begin{itemize}
+\item {\verb|anonymous,review|}: Suitable for a ``dual-anonymous''
+  conference submission. Anonymizes the work and includes line
+  numbers. Use with the \verb|\acmSubmissionID| command to print the
+  submission's unique ID on each page of the work.
+\item{\verb|authorversion|}: Produces a version of the work suitable
+  for posting by the author.
+\item{\verb|screen|}: Produces colored hyperlinks.
+\end{itemize}
 
-Rollen- und Akteurenautorisierung und -authentifizierung ... \cite{8633673}
+This document uses the following string as the first command in the
+source file:
+\begin{verbatim}
+\documentclass[acmtog]{acmart}
+\end{verbatim}
 
-Die dezentrale Speicherung der Daten in den Pods erlaubt es den Nutzer:innen ihre eigenen Daten zu verwalten. Dies lässt sich genauer in den folgenden drei Teilbereichen der Datenverwaltung betrachten. Dadurch, dass die Nutzer:innen selber entscheiden dürfen wer auf welche Daten zugreifen darf, und was mit den Daten geschehen darf, wird die Privatsphäre der Nutzer:innen garantiert. Damit geht auch einher, dass die Nutzer:innen ihre Eigentumsrechte vollständig geltend machen können. Die Daten werden auf vertrauenswürdigen Servern oder lokal gehostet und können über diese frei verfügen. Es besteht beispielsweise nicht die Möglichkeit, wie dies aktuell der Fall ist, dass mit dem plötzlichen Abschalten einer Social Media Platform, auch die eigenen Daten vreloren gehen. Die Nutzer:innen dürfen außerdem auch selbst entscheiden nach welchen Regeln ihre Daten verteilt werden. \cite{yeung2023decentralization}
+\section{(Hauptteil mit ggf. mehreren Sections)}
+
+(der Hauptteil umfasst typischerweise ca. 2/3 bis 3/4 des Texts der Arbeit.)
+
+Modifying the template --- including but not limited to: adjusting
+margins, typeface sizes, line spacing, paragraph and list definitions,
+and the use of the \verb|\vspace| command to manually adjust the
+vertical spacing between elements of your work --- is not allowed.
+
+{\bfseries Your document will be returned to you for revision if
+  modifications are discovered.}
+
+The ``\verb|acmart|'' document class requires the use of the
+``Libertine'' typeface family. Your \TeX\ installation should include
+this set of packages. Please do not substitute other typefaces. The
+``\verb|lmodern|'' and ``\verb|ltimes|'' packages should not be used,
+as they will override the built-in typeface families.
+
+The ``\verb|acmart|'' document class includes the ``\verb|booktabs|''
+package --- \url{https://ctan.org/pkg/booktabs} --- for preparing
+high-quality tables.
+
+Table captions are placed {\itshape above} the table.
+
+Because tables cannot be split across pages, the best placement for
+them is typically the top of the page nearest their initial cite.  To
+ensure this proper ``floating'' placement of tables, use the
+environment \textbf{table} to enclose the table's contents and the
+table caption.  The contents of the table itself must go in the
+\textbf{tabular} environment, to be aligned properly in rows and
+columns, with the desired horizontal and vertical rules.  Again,
+detailed instructions on \textbf{tabular} material are found in the
+\textit{\LaTeX\ User's Guide}.
+
+Immediately following this sentence is the point at which
+Table~\ref{tab:freq} is included in the input file; compare the
+placement of the table here with the table in the printed output of
+this document.
+
+\begin{table}
+  \caption{Frequency of Special Characters}
+  \label{tab:freq}
+  \begin{tabular}{ccl}
+    \toprule
+    Non-English or Math&Frequency&Comments\\
+    \midrule
+    \O & 1 in 1,000& For Swedish names\\
+    $\pi$ & 1 in 5& Common in math\\
+    \$ & 4 in 5 & Used in business\\
+    $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+To set a wider table, which takes up the whole width of the page's
+live area, use the environment \textbf{table*} to enclose the table's
+contents and the table caption.  As with a single-column table, this
+wide table will ``float'' to a location deemed more
+desirable. Immediately following this sentence is the point at which
+Table~\ref{tab:commands} is included in the input file; again, it is
+instructive to compare the placement of the table here with the table
+in the printed output of this document.
+
+\begin{table*}
+  \caption{Some Typical Commands (table with full page width)}
+  \label{tab:commands}
+  \begin{tabular}{ccl}
+    \toprule
+    Command &A Number & Comments\\
+    \midrule
+    \texttt{{\char'134}author} & 100& Author \\
+    \texttt{{\char'134}table}& 300 & For tables\\
+    \texttt{{\char'134}table*}& 400& For wider tables\\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+Always use midrule to separate table header rows from data rows, and
+use it only for this purpose. This enables assistive technologies to
+recognise table headers and support their users in navigating tables
+more easily.
+
+\subsection{Math Equations}
+You may want to display math equations in three distinct styles:
+inline, numbered or non-numbered display.  Each of the three are
+discussed in the next sections.
+
+\subsubsection{Inline (In-text) Equations}
+A formula that appears in the running text is called an inline or
+in-text formula.  It is produced by the \textbf{math} environment,
+which can be invoked with the usual
+\texttt{{\char'134}begin\,\ldots{\char'134}end} construction or with
+the short form \texttt{\$\,\ldots\$}. You can use any of the symbols
+and structures, from $\alpha$ to $\omega$, available in
+\LaTeX~\cite{Lamport:LaTeX}; this section will simply show a few
+examples of in-text equations in context. Notice how this equation:
+\begin{math}
+  \lim_{n\rightarrow \infty}x=0
+\end{math},
+set here in in-line math style, looks slightly different when
+set in display style.  (See next section).
+
+\subsubsection{Display Equations}
+A numbered display equation---one set off by vertical space from the
+text and centered horizontally---is produced by the \textbf{equation}
+environment. An unnumbered display equation is produced by the
+\textbf{displaymath} environment.
+
+Again, in either environment, you can use any of the symbols and
+structures available in \LaTeX\@; this section will just give a couple
+of examples of display equations in context.  First, consider the
+equation, shown as an inline equation above:
+\begin{equation}
+  \lim_{n\rightarrow \infty}x=0
+\end{equation}
+Notice how it is formatted somewhat differently in
+the \textbf{displaymath}
+environment.  Now, we'll enter an unnumbered equation:
+\begin{displaymath}
+  \sum_{i=0}^{\infty} x + 1
+\end{displaymath}
+and follow it with another numbered equation:
+\begin{equation}
+  \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
+\end{equation}
+just to demonstrate \LaTeX's able handling of numbering.
+
+The ``\verb|figure|'' environment should be used for figures. One or
+more images can be placed within a figure. If your figure contains
+third-party material, you must clearly identify it as such, as shown
+in the example below.
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{images/htwkleipzig_sailing_frigate_full_set_sails_calm_ocean_blue_sky__4060fe96-060b-4ddf-890a-349f3de73f6f.png}
+  \caption{Sailing Frigate. Image generated by Andreas Both (2023).}
+    \label{fig:my-figure-1}
+  \Description{A woman and a girl in white dresses sit in an open car.}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{images/anbo_de_A_group_of_Meerkats_in_nature_working_on_laptops_super__fd9893f8-7134-4950-94ae-0a24ff6ae5f3.png}
+  \caption{Meerkats in nature working on laptops. Image by Andreas Both (2023). (image with full page width)}
+    \label{fig:my-figure-2}
+  \Description{A woman and a girl in white dresses sit in an open car.}
+\end{figure*}
+
+Your figures (cf. Abb.~\ref{fig:my-figure-1} and \ref{fig:my-figure-2}) should contain a caption which describes the figure to
+the reader.
+
+Figure captions are placed {\itshape below} the figure.
+
+Every figure should also have a figure description unless it is purely
+decorative. These descriptions convey what’s in the image to someone
+who cannot see it. They are also used by search engine crawlers for
+indexing images, and when images cannot be loaded.
+
+A figure description must be unformatted plain text less than 2000
+characters long (including spaces).  {\bfseries Figure descriptions
+  should not repeat the figure caption – their purpose is to capture
+  important information that is not already provided in the caption or
+  the main text of the paper.} For figures that convey important and
+complex new information, a short text description may not be
+adequate. More complex alternative descriptions can be placed in an
+appendix and referenced in a short figure description. For example,
+provide a data table capturing the information in a bar chart, or a
+structured list representing a graph.  For additional information
+regarding how best to write figure descriptions and why doing this is
+so important, please see
+\url{https://www.acm.org/publications/taps/describing-figures/}.
+
+\subsection{The ``Teaser Figure''}
+
+A ``teaser figure'' is an image, or set of images in one figure, that
+are placed after all author and affiliation information, and before
+the body of the article, spanning the page. If you wish to have such a
+figure in your article, place the command immediately before the
+\verb|\maketitle| command:
+\begin{verbatim}
+  \begin{teaserfigure}
+    \includegraphics[width=\textwidth]{sampleteaser}
+    \caption{figure caption}
+    \Description{figure description}
+  \end{teaserfigure}
+\end{verbatim}
+
+\subsection{Citations and Bibliographies}
+
+Citations and references are numbered by default. A small number of
+ACM publications have citations and references formatted in the
+``author year'' style; for these exceptions, please include this
+command in the {\bfseries preamble} (before the command
+``\verb|\begin{document}|'') of your \LaTeX\ source:
+\begin{verbatim}
+  \citestyle{acmauthoryear}
+\end{verbatim}
 
 
-\label{section:standDerForschung}
-\section{Stand der Forschung}
-\todo[inline]{Info: Allgemein ist die Solid CG und deren Kram als State of the Art anzusehen, wird auch aktuell dran gearbeitet das zu nem festen W3C-Standard zu machen}
-Seit 2018 wird durch die W3C Solid Community Group(CG) an den Spezifikationen für Solid-Technologien gearbeitet. 
-Diese werden in einem ständig aktualisierten technical report~\footnote{https://solidproject.org/TR/} zusammengefasst und umfassen unter anderem erste Standards für das Solid Protokoll, das WebID-Profil, sowie zur Authentifizierung, Autorisierung und Interoperabilität. 
-Auf der Website der CG befindet sich eine Anleitung für den Einstieg in Solid. Es besteht die Möglichkeit einen Pod-Server selbst zu hosten. Die CG stellt hier eine Liste verfügbarer open source Serverimplementationen bereit. Diese umfassen z.B. den CommunitySolidServer(CSS)~\footnote{https://github.com/CommunitySolidServer/CommunitySolidServer/} und Node Solid Server~\footnote{https://github.com/solid/node-solid-server} für Node.js sowie Implementierungen in PHP und Rust.
-Gleichzeitig wird eine Übersicht über einige bereits existierende Anbieter für Solid Pods mit Informationen zur Implementation und dem Hosting der Daten geboten.
-Ebenfalls ist eine Liste von Werkzeugen und Bibliotheken sowie eine Übersicht der CG bekannten Apps für Solid vorhanden.
+\section{Diskussion}
 
-\label{section:implementierungEinerBeispielanwendung}
-\section{Implementierung einer Beispielanwendung}
-\todo[inline]{Istvan -> Testbetrieb Lokal okay, recht viel wo man sich erstmal reinlesen muss bzgl. Authentifizierung, aber nichts hindert das auf nem Server schonmal aufzusetzen und dann damit rumzuspielen. Detailliertheit einer "Anleitung" in der Ausarbeitung ist bei Both dann zu erfragen}
-Um Solid-Technologien anwenden zu können, ist die Voraussetzung ein Pod und eine WebID. Um diese zu erhalten wird hier im Beispiel ein selbstgehosteter Solid Server der Implementation CSS genutzt. Nach Erstellung eines Accounts hat man die Möglichkeit ein ersten Datenpod zu erstellen. \todo[inline]{Istvan-> Naja danach tobt man sich dann mit den Apps drauf aus. Gibt da bei der CG so ein paar}
+(Einordnung, Interpretation und Bewertung der Erkenntnisse -- (nachvollziehbare, begründbare) Meinungen sind erlaubt) 
 
-\label{section:wasSindPotentiellePitfallsUndGefahren}
-\section{Was sind potentielle Pitfalls und Gefahren?}
-
-Im folgenden Kapitel werden potentielle Pitfalls und Gefahren der Solid-Technologie untersucht. Da die Technologie noch nicht weltweit kommerziell eingesetzt wird, müssen wir hier, basierend auf den entwickelten Prototypen und Einsatzmöglichkeiten, Schlussfolgerungen ziehen.
-
-Die erste Gefahr dieses Konzepts ist, dass nicht genug Nutzer:innen und Entwickler:innen Solid einsetzen wollen, weil es sich um eine neu, unbekannte Technologie handelt, deren großes Potential erst bei hoher Skalierung wirklich deutlich wird. Zu Beginn bedeutet der Paradigmen Wechsel von der zentralisierten zur dezentralisierten Datenspeicherung erstmal eine große Umstellung für die Nutzer:innen und Entwickler:innen. Die Frage bleibt hier offen, ob die breite Masse bereit ist, diese Umstellung mitzugehen.
-
-Ein weiteres Problem, welches die positiven Effekte der Technologie einschränken könnte, ist wie die Unternehmen (Webanwendungen) tatsächlich mit den Daten umgehen. So kann es natürlich sein, dass Dienste Solid nutzen um Nutzerdaten einmalig abzurufen und bei sich zu speichern. Auf diese Daten haben die Nutzer:innen dann keinen Zugriff mehr und so können auch wieder zentralisierte Datenspeicher entstehen.
-
-Eine offenstehende Problemstellung die es bei der Technologie noch zu lösen gibt, ist es, wie mit Referenzen auf Daten umgegangen wird, die es nicht mehr gibt, oder für die die Rechte inzwischen fehlen.
-\todo[inline]{ausführen, ggf Quelle finden}
-
-Ein weiteres, bisher ungelöstes Problem ist, dass durch die Dezentralisierung Freigabeprozesse (beispielsweise beim Authentifizierungsprozess) länger dauern können, da mehr Module involviert und miteinander Kommunizieren müssen als beim aktuellen Konzept.
-\todo[inline]{ausführen, ggf Quelle finden - Boths Paper?}
-
-\todo[inline]{Lösungsansätze?}
-
-\label{section:alternativeKonzepte}
-\section{Alternative Konzepte}
-Lässt sich kombinieren mit Solid (siehe Zukünftige Entwicklungen):
-
-Decentralized social networks
-Blockchain-based platforms for social interaction and content creation and distribution.
-Decentralized social media networks protect user privacy and enhance data security.
-Tokens and NFTs create new ways to monetize content.~\footnote{https://ethereum.org/en/social-networks/}
-
-block-chain based decentralized platforms~\cite{pereira2019blockchain}
-
-Die dezentralisierte Lagerung von Daten und die Gewährleistung, bestehenden Zugriff auf diese zu halten, ist schon länger ein Thema, an dem geforscht wird. Es wurden einige Lösungsansätze entwickelt, darunter die Speicherung von Daten mithilfe der Distributed-Ledger-Technologie, mittels eines dezentralisiertem Peer-to-Peer Datenspeichers, oder die Kombination beider Technologien, bei dem die Distributed-Ledgers die Integrität der Daten garantieren, während die Daten tatsächlich in mittels Peer-to-Peer gespeichert werden. Bei diesen Ansätzen ist der potentielle Datenverlust, sollte der original Host offline gehen ein bestehendes Problem, für das die Solid-Technology die Lösung sein könnte. Hierbei wird die Distributed-Ledger-Technology in ein Solid-Ökosystem integriert, um die Daten zu verifizieren. ~\cite{ramachandran2020towards}
-
-Ein Distributed Ledger ist eine Aufzeichnung (Record) von dezentralen Einträgen ohne zentrales Register. Diese Einträge werden in einer Blockchain gesichert. Eine Blockchain kann man sich als eine Reihe an Blöcken vorstellen, von denen jeder einen Eintrag enthält. Die Blöcke speichern auch alle Hashes ihrer Vorgänger (die vorherigen Blöcke in der Reihe) und generieren einen eigenen Hash, basierend auf den gespeicherten Daten. Alle Teilnehmer:innen haben eine Kopie der Blockchain. Wenn ein Eintrag nachträglich geändert wird, so ändert sich der Hash des Blockes indem sich der Eintrag gespeichert ist. Somit entspricht der Hash nicht mehr dem in den folgenden Blöcken gespeicherten Hash und die Chain ist gebrochen - es ist für die Teilnehmer:innen offensichtlich, dass die Daten abgeändert wurden. Neue Blöcke können nur mit der Zustimmung der Teilnehmer:innen hinzugefügt werden.
-Durch diese Blockchain-basierte Verifizierung der Daten kann ihre Integrität und damit die Dezentralisierung von Daten und vollständige Kontrolle dieser von den Nutzer:innen gewährleistet werden. ~\cite{ramachandran2020towards}
-
-\label{section:zukunftsausblick}
-\section{Zukunftsausblick/ Einsatzmöglichkeiten der Technologie}
-
-Im vorherigen Kapitel wurde Solid anderen Konzepten gegenübergestellt und einige Kombinationen mit existierenden Konzepten aufgeführt. Dieses Kapitel setzt sich Konzepten auseinander, die auf Solid basieren und da Konzept weiterentwickeln.
-Die Solid Technologie hat als Grundlage für viele verschiedene Realisierungen von Konzepten verwendet werden. Die wohl offensichtlichste, ist die Entwicklung von dezentralisierten Soziale Netzwerke~\cite{yeung2023decentralization}.
-Eine andere Einsatzmöglichkeit, sind Solid Data Spaces ~\cite{meckler2023web}
+Some examples.  A paginated journal article \cite{Abril07}, an
+enumerated journal article \cite{Cohen07}, a reference to an entire
+issue \cite{JCohen96}, a monograph (whole book) \cite{Kosiur01}, a
+monograph/whole book in a series (see 2a in spec. document)
+\cite{Harel79}, a divisible-book such as an anthology or compilation
+\cite{Editor00} followed by the same example, however we only output
+the series if the volume number is given \cite{Editor00a} (so
+Editor00a's series should NOT be present since it has no vol. no.),
+a chapter in a divisible book \cite{Spector90}, a chapter in a
+divisible book in a series \cite{Douglass98}, a multi-volume work as
+book \cite{Knuth97}, a couple of articles in a proceedings (of a
+conference, symposium, workshop for example) (paginated proceedings
+article) \cite{Andler79, Hagerup1993}, a proceedings article with
+all possible elements \cite{Smith10}, an example of an enumerated
+proceedings article \cite{VanGundy07}, an informally published work
+\cite{Harel78}, a couple of preprints \cite{Bornmann2019,
+AnzarootPBM14}, a doctoral dissertation \cite{Clarkson85}, a
+master's thesis: \cite{anisi03}, an online document / world wide web
+resource \cite{Thornburg01, Ablamowicz07, Poker06}, a video game
+(Case 1) \cite{Obama08} and (Case 2) \cite{Novak03} and \cite{Lee05}
+and (Case 3) a patent \cite{JoeScientist001}, work accepted for
+publication \cite{rous08}, 'YYYYb'-test for prolific author
+\cite{SaeediMEJ10} and \cite{SaeediJETC10}. Other cites might
+contain 'duplicate' DOI and URLs (some SIAM articles)
+\cite{Kirschmer:2010:AEI:1958016.1958018}. Boris / Barbara Beeton:
+multi-volume works as books \cite{MR781536} and \cite{MR781537}. A
+couple of citations with DOIs:
+\cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
+citations: \cite{TUGInstmem, Thornburg01, CTANacmart}. Artifacts:
+\cite{R} and \cite{UMassCitations}.
 
 
+\section{Zusammenfassung und Ausblick}
+
+(Überblick über die gesamte Arbeit, Rückführung auf Aussagen aus Kapitel 1 durchführen, offene Punkte als neue Forschungsfragen definieren)
+
+Papers may be written in languages other than English or include
+titles, subtitles, keywords and abstracts in different languages (as a
+rule, a paper in a language other than English should include an
+English title and an English abstract).  Use \verb|language=...| for
+every language used in the paper.  The last language indicated is the
+main language of the paper.  
+
+The title, subtitle, keywords and abstract will be typeset in the main
+language of the paper.  The commands \verb|\translatedXXX|, \verb|XXX|
+begin title, subtitle and keywords, can be used to set these elements
+in the other languages.  The environment \verb|translatedabstract| is
+used to set the translation of the abstract.  These commands and
+environment have a mandatory first argument: the language of the
+second argument.  See \verb|sample-sigconf-i13n.tex| file for examples
+of their usage.
+
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
 
+%%
+%% If your work has an appendix, this is the place to put it.
 \appendix
 
+\section{Anhang 1}
+
+\subsection{Übungsaufgaben}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+malesuada, quam in pulvinar varius, metus nunc fermentum urna, id
+sollicitudin purus odio sit amet enim. Aliquam ullamcorper eu ipsum
+vel mollis. Curabitur quis dictum nisl. Phasellus vel semper risus, et
+lacinia dolor. Integer ultricies commodo sem nec semper.
+
+\subsection{Part Two}
+
+Etiam commodo feugiat nisl pulvinar pellentesque. Etiam auctor sodales
+ligula, non varius nibh pulvinar semper. Suspendisse nec lectus non
+ipsum convallis congue hendrerit vitae sapien. Donec at laoreet
+eros. Vivamus non purus placerat, scelerisque diam eu, cursus
+ante. Etiam aliquam tortor auctor efficitur mattis.
+
+\section{Anhang 2}
+
+Nam id fermentum dui. Suspendisse sagittis tortor a nulla mollis, in
+pulvinar ex pretium. Sed interdum orci quis metus euismod, et sagittis
+enim maximus. Vestibulum gravida massa ut felis suscipit
+congue. Quisque mattis elit a risus ultrices commodo venenatis eget
+dui. Etiam sagittis eleifend elementum.
+
+Nam interdum magna at lectus dignissim, ac dignissim lorem
+rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
+massa et mattis lacinia.
+
+\section{Anhang 3}
+
+...
+
 \end{document}
+\endinput
+%%
+%% End of file `sample-acmtog.tex'.
