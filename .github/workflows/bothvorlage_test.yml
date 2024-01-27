@@ -1,5 +1,8 @@
 name: Build LaTeX document
 on: [push]
+# Make sure the GITHUB_TOKEN has permission to upload to our releases
+permissions:
+  contents: write
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -10,9 +13,16 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/bothvorlage/vorlage.tex
-          working_directory: tex/bothvorlage/
       - name: Upload PDF file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: bothvorlage.pdf
+          path: vorlage.pdf
+      - name: upload as latest release
+        run: |
+          cd ${{github.workspace}}
+          gh release delete-asset latest vorlage.pdf
+          gh release upload latest vorlage.pdf
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash
