@@ -19,10 +19,10 @@ jobs:
         with:
           name: PDF
           path: vorlage.pdf
-      - name: upload as latest release
-        run: |
-          cd ${{github.workspace}}
-          gh release upload latest vorlage.pdf
-        env:
-          GITHUB_TOKEN: ${{ github.TOKEN }}
-        shell: bash
+      # - name: upload as latest release
+      #   run: |
+      #     cd ${{github.workspace}}
+      #     gh release upload latest vorlage.pdf
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.TOKEN }}
+      #   shell: bash
