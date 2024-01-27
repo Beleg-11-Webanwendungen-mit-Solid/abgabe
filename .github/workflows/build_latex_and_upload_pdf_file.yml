@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Build Test LaTeX document
 on: [push]
 # Make sure the GITHUB_TOKEN has permission to upload to our releases
 permissions:
@@ -21,7 +21,6 @@ jobs:
       - name: '📦 upload as latest release'
         run: |
           cd ${{github.workspace}}
-          gh release delete-asset latest example.pdf
           gh release upload latest example.pdf
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
