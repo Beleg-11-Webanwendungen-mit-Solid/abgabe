@@ -18,11 +18,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: vorlage.pdf
-      # - name: upload as latest release
-      #   run: |
-      #     cd ${{github.workspace}}
-      #     gh release upload latest vorlage.pdf
-      #   env:
-      #     GITHUB_TOKEN: ${{ github.TOKEN }}
-      #   shell: bash
+          path: tex/bothvorlage/vorlage.pdf
+      - name: upload as latest release
+        run: |
+          cd ${{github.workspace}}
+          gh release upload latest tex/bothvorlage/vorlage.pdf
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash
