@@ -24,7 +24,7 @@ jobs:
       - name: upload as latest release
         run: |
           cd ${{github.workspace}}
-          gh release upload latest tex/beleg/beleg11-webanwendungen-mit-solid.pdf
+          gh release upload v0.9 tex/beleg/beleg11-webanwendungen-mit-solid.pdf
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
