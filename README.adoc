@@ -1,8 +1,11 @@
 = Beleg 11:Datensouveräne Web-Anwendungen mit der Solid Technologie Social Linked Data
 
 Bearbeitet von:
+
 Anna Denzel, 23MIM
+
 Alexander Reiprich, 23 MIM
+
 István J. Mócsy, 21INM
 
 Im Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2023/2024) an der HTWK Leipzig
@@ -10,12 +13,14 @@ Im Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2023
 == Präsentation
 
 https://www.latex-project.org/[Link zur pdf]
+
 https://www.latex-project.org/[Link zur tex]
 
 == Beleg
 
 https://www.latex-project.org/[Link zur pdf]
+
 https://www.latex-project.org/[Link zur tex]
 
-
+Abstract:
 Am 20. Dezember 1990 wurde die erste Website von Sir Timothy John Berners-Lee zur Verfügung gestellt. Seitdem hat sich das World Wide Web zu einem nicht mehr wegzudenkendem Aspekt des alltäglichen Lebens entwickelt. Mit dieser Entwicklung kommen neben Innovationen, welche das Leben erleichtern, auch Gefahren zum Vorschein. Berners-Lee selbst hat 2017, zum 28. Geburtstag  des WWW in einem Brie die drei wichtigsten Probleme für das Web benannt. Eines dieser Probleme lautet "`Wir haben die Kontrolle über unsere persönlichen Daten verloren"'. Um diese Kontrolle wiederzuerlangen, wird unter der Leitung von Berners-Lee seit 2015 die Spezifikation Solid (Social Linked Data) entwickelt, welche eine Technologie für sichere, dezentralisierte Speicherung von Daten jeglicher Art bereitstellt. Dieser Beleg beschäftigt sich mit den Grundprinzipien von Solid und soll einen Überblick über die Technologie schaffen. Ebenfalls werden Vor- und Nachteile des momentanen zentralisierten Konzepts, wie auch eines potenziell zukünftigen dezentralisierten Konzepts mit Solid beleuchtet.
