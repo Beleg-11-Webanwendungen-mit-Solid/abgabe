@@ -12,6 +12,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
+          latexmk_shell_escape: true
           working_directory: tex/beleg/
           root_file: beleg11-webanwendungen-mit-solid.tex
       - name: Upload PDF file
