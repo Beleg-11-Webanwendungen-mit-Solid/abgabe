@@ -15,7 +15,7 @@
 
 \setbeamertemplate{footline}[text line]{%
   \parbox{\linewidth}{\vspace*{-8pt}Datensouveräne Web-Anwendungen mit der Solid-Technologie\hfill\insertpagenumber}}
-
+        
 \setbeamercolor{title}{fg=black}
 \usepackage[inkscapearea=page]{svg}
 \usepackage[edges]{forest}
@@ -121,8 +121,8 @@
 \begin{itemize}
     \item Kontrollverlust über die Daten (Überwachungskapitalismus) \cite{zuboff2018ueberwachungskapitalismus}
     \item Veraltete, unvollständige Datensätze oder duplizierte Datensätze 
+    \item Kontinuierlicher Managementaufwand
     \item Hohe Einstiegshürde für neue Unternehmen
-    \item kontinuierlicher Managementaufwand
     \item Verlust der Innovation, da keine Konkurrenzfähigkeit ohne Datensilos
 \end{itemize}
 \end{frame}
@@ -130,15 +130,14 @@
 \section{Solid - Social Linked Data}
 \begin{frame}{Der Beginn von Solid}
 \begin{itemize}
-    \item "Three challenges for the web, according to its inventor" \cite{webfoundation2017}
-    \item Entwicklung der Semantic Web und Linked Data Konzepte \cite{bernerslee1998semanticwebroadmap}
+    \item Semantic Web und Linked Data Konzepte \cite{bernerslee1998semanticwebroadmap}
+    \item "Three challenges for the web, according to its inventor"  \cite{webfoundation2017}
     \item Berners-Lee ruft Solid (Social Linked Data) ins Leben
-    \item Fokuswechsel von Privacy Issues zum Potential des Konzeptes
 \end{itemize}
 \end{frame}
 
 \subsection{Grundlagen Solid}
-\begin{frame}{Grundlagen von Solid}
+\begin{frame}{Grundlagen von Solid\cite{MarcoNeumann.2021}}
 \begin{figure}[htbp]
   \centering
   \includesvg[width=0.70\paperwidth]{images/concepts.svg}
@@ -146,14 +145,14 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}{Datenverteilung}
+\begin{frame}{Datenverteilung\cite{MarcoNeumann.2021}}
 \begin{figure}[htbp]
   \includesvg[width=0.80\paperwidth,inkscapelatex=false]{images/datasilos.svg}
   \caption{Zentralisierte Webanwendungen besitzen verschiedene Versionen der selben Information, während dezentralisierte Webanwendungen auf die Pods zugreifen}
 \end{figure}
 \end{frame}
 
-\begin{frame}{Kommunikation der Anwendungen und Daten}
+\begin{frame}{Kommunikation der Anwendungen und Daten\cite{MarcoNeumann.2021}}
 \begin{figure}[htbp]
   \includesvg[width=0.80\paperwidth,inkscapelatex=false]{images/backends.svg}
   \caption{Zentralisierte Anwendungen besitzen ein angepasstes Backend, während dezentralisierte Anwendungen höhere Interoperabilität besitzen}
@@ -164,14 +163,14 @@
 %Todo: Grafik die zeigt wie man mit Solid ein Netz an Komponenten aufbauen (Anwendung, Authentification, Data Pod)
 \begin{figure}[htbp]
   \includesvg[width=0.80\paperwidth,inkscapelatex=false]{images/ecosystem.svg}
-  \caption{Interaktionen der einzelnen Komponenten im Solid-Ökosystem}
+  \caption{Interaktionen der einzelnen Komponenten im Solid-Ökosystem\cite{soliddeblackboxed}}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}{Das Solid-Ökosystem : Begriffe}
+\begin{frame}{Das Solid-Ökosystem: Begriffe}
 \begin{itemize}
-    \item Podprovider: Service welcher Pod bereitstellt und i.d.R. Identität überprüft\cite{sambra2016solid}
+    \item Podprovider: Service welcher Pod bereitstellt und i.d.R. Identität überprüft \cite{sambra2016solid}
     \item WebID: Ressource, welche einen Pod im Solid-Ökosystem identifiziert
     \item Access Control List (ACL): Regelt die Zugriffsberechtigungen für die Ressourcen eines Pods
     \item Solid App: Anwendung, welche nach den Vorgaben des Solid-Protokolls aufgebaut ist
@@ -181,22 +180,22 @@
 \subsection{Semantic Web}
 \begin{frame}{Semantic Web}
 \begin{itemize}
-    \item W3Cs Vision eines "Web of Linked Data"\cite{bernerslee1998semanticwebroadmap}
+    \item W3Cs Vision eines "Web of Linked Data" \cite{bernerslee1998semanticwebroadmap}
     \item Technologiestack um Linked Data zu beschreiben und zu verarbeiten
-    \item Zuweisung von Uniform Resource Identifier (URI) für Ressourcen\cite{blumauer2006semantic}
-    \item Beschreibung von Datenzusammenhang über Ontologien\cite{staab2009handbook}
-    \item Speicherung von Daten als Knowledge Graph(KG)\cite{blumauer2006semantic}
+    \item Zuweisung von Uniform Resource Identifier (URI) für Ressourcen \cite{blumauer2006semantic}
+    \item Beschreibung von Datenzusammenhang über Ontologien \cite{staab2009handbook}
+    \item Speicherung von Daten als Knowledge Graph (KG) \cite{blumauer2006semantic}
 \end{itemize}
 \end{frame}
 
 \subsection{Resource Description Framework (RDF)}
 \begin{frame}{Resource Description Framework (RDF)}
 \begin{itemize}
-    \item URI: Eindeutiger Bezeichner einer Ressource, oft ähnlich einer URL\cite{blumauer2006semantic}
-    \item Ressource: \texttt{\dq Sache\dq} über die Aussage getroffen werden soll, eindeutig bezeichnet\cite{blumauer2006semantic}
+    \item URI: Eindeutiger Bezeichner einer Ressource, oft ähnlich einer URL \cite{blumauer2006semantic}
+    \item Ressource: \texttt{\dq Sache\dq} über die Aussage getroffen werden soll, eindeutig bezeichnet \cite{blumauer2006semantic}
     \item Literal: Zeichenkette, die Daten enthält
-    \item Ontologie/Vokabular: Datei, welche Zusammenhänge zwischen Ressourcen beschreibt\cite{staab2009handbook}
-    \item Knowledge Graph: Datei, welche die Ressourcen als Tripel zu eben diesen Graphen zusammensetzt\cite{staab2009handbook}
+    \item Ontologie/Vokabular: Datei, welche Zusammenhänge zwischen Ressourcen beschreibt \cite{staab2009handbook}
+    \item Knowledge Graph: Datei, welche die Ressourcen als Tripel zu eben diesen Graphen zusammensetzt \cite{staab2009handbook}
 \end{itemize}
 \end{frame}
 
@@ -253,21 +252,21 @@ example:movies/back-to-the-future-part-ii#it
 \begin{frame}{Vorteile}
 \begin{itemize}
     \item Großes Skalierungspotential \cite{8633673}
-    \item Trennung Daten und Webanwendungen mit Kommunikation über Schnittstellen (hohe Interoperabilität)\cite{8633673}
+    \item Trennung Daten und Webanwendungen mit Kommunikation über Schnittstellen (hohe Interoperabilität) \cite{8633673}
     \item Datenverwaltung durch Nutzer:innen (Data Privacy) \cite{yeung2023decentralization} 
-    \item kein legale Begrenzungen für Datenspeicherung \cite{MarcoNeumann.2021}
-    \item keine unvollständigen Datensätze\cite{MarcoNeumann.2021}
+    \item Keine veralteten Datensätze \cite{MarcoNeumann.2021}
     \item Datensouveränität
-    \item Feingranulare Autorisierung und Authentifizierung\footnote{\url{https://solidproject.org/TR/acp}}
+    \item Feingranulare Autorisierung und sichere Authentifizierung \cite{acp.2022}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Potential für Unternehmen}
 \begin{itemize}
     \item Niedrigere Entwicklungskosten durch Auslagern vieler Funktionalitäten 
-    \item Kein Daten- und Identitätsmanagement mehr notwendig
-    \item Zugriff auf vollständige, aktuelle Datensätze der Nutzer:innen \cite{MarcoNeumann.2021}
     \item Einfache Modularisierung und Integration von Funktionalitäten
+    \item Kein Daten- und Identitätsmanagement mehr notwendig
+    \item Kein legale Begrenzungen für Datenspeicherung \cite{MarcoNeumann.2021}
+    \item Zugriff auf aktuelle Datensätze der Nutzer:innen \cite{MarcoNeumann.2021}
     \item Raum für Innovationen \cite{MarcoNeumann.2021}
 \end{itemize}
 \end{frame}
@@ -278,21 +277,20 @@ example:movies/back-to-the-future-part-ii#it
 \begin{itemize}
     \item Falsche Umsetzung des Konzepts (Missbrauch von Daten) \cite{MarcoNeumann.2021}
     \item Erhöhte technische Komplexität \cite{MarcoNeumann.2021}
-    \item Grundlegend andere Implementierung der Kommunikation \cite{MarcoNeumann.2021}
-    \item große Umstellung für Entwickler:innen und Nutzer:innen \cite{MarcoNeumann.2021}
-    \item Performance Probleme (Kommunikation mehreren Modulen/Pods notwendig -> sehr viele Netzwerkzugriffe) \cite{MarcoNeumann.2021}
+    \item Andere Implementierung der Kommunikation notwendig \cite{MarcoNeumann.2021}
+    \item Große Umstellung für Entwickler:innen und Nutzer:innen \cite{MarcoNeumann.2021}
+    \item Performance-Probleme (Kommunikation mit mehreren Modulen/Pods notwendig -> sehr viele Netzwerkzugriffe) \cite{MarcoNeumann.2021}
     \item Referenz auf Daten nicht beständig und keine garantierte Zugriffsberechtigung
-
 \end{itemize}
 \end{frame}
 
 \section{Ausblick}
 \begin{frame}{Ausblick}
-Drei mögliche Einsatzmöglichkeiten von Solid
+Drei Einsatzmöglichkeiten von Solid:
 \begin{itemize}
     \item Gesicherte Verifizierung mit Blockchain ~\cite{ramachandran2020towards}
-    \item Solid Data Spaces  ~\cite{meckler2023web}
-    \item ConSolid für Linked Building Data ~\cite{8633673}
+    \item Solid Data Spaces ~\cite{meckler2023web}
+    \item ConSolid für Linked Building Data ~\cite{8633673}~\cite{werbrouck2022consolid}
 \end{itemize}
 \end{frame}
 
@@ -302,7 +300,7 @@ Solid...
 \begin{itemize}
     \item ...ist eine Alternative zum aktuellen zentralisierten Konzept der Datenverwaltung.
     \item ...nutzt das Resource Description Framework (RDF) um Daten und Ressourcen zu speichern.
-    \item ...bietet Nutzer:innen mehr Kontrolle über die eigenen Daten durch die Nutzung von Pods (Personal Online Datastore).
+    \item ...bietet Nutzer:innen und Unternehmen mehr Kontrolle über die eigenen Daten durch die Nutzung von Personal Online Datastores (Pods).
     \item ...erlaubt hohe Interoperabilität durch die freie Kombinierbarkeit von Pods, Providern und Anwendungen.
 \end{itemize}
 \end{frame}
