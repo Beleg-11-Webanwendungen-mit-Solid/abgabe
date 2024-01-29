@@ -1,0 +1,426 @@
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[acmtog]{acmart}
+\usepackage[english,ngerman]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[inkscapearea=page]{svg}
+
+%% Listing settings
+
+%\usepackage[dvipsnames]{xcolor} % https://en.wikibooks.org/wiki/LaTeX/Colors
+\definecolor{LightGray}{rgb}{0.97,0.97,0.97}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\usepackage{listings}
+\lstdefinestyle{rdf}{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\tiny,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=rdf}
+
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+    
+\copyrightyear{2024}
+\acmYear{2024}
+\citestyle{acmauthoryear}
+
+\usepackage[figurename=Fig.]{caption}
+\setcopyright{none}
+\makeatletter
+\renewcommand{\fnum@figure}{Abb. \thefigure}
+\makeatother
+\addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Beleg 11 Datensouveräne Web-Anwendungen mit der Solid Technologie Social Linked Data}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\authornote{Alle Studierenden trugen zu gleichen Teilen zu dieser Arbeit bei.}
+\author{Anna Denzel}
+\authornotemark[1]
+\author{Istvan J. Mocsy}
+\authornotemark[1]
+\author{Alexander Reiprich}
+\authornotemark[1]
+\affiliation{%
+  \institution{Hochschule für Technik, Wirtschaft und Kultur Leipzig (HTWK Leipzig)}
+  \streetaddress{Karl-Liebknecht-Str. 132}
+  \city{Leipzig}
+  \country{Deutschland}
+  \postcode{04277}
+}
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+Am 20. Dezember 1990 wurde die erste Website\footnote{Rekonstruktion: \url{http://info.cern.ch/hypertext/WWW/TheProject.html}} von Sir Timothy John Berners-Lee zur Verfügung gestellt. Seitdem hat sich das World Wide Web zu einem nicht mehr wegzudenkendem Aspekt des alltäglichen Lebens entwickelt. Mit dieser Entwicklung kommen neben Innovationen, welche das Leben erleichtern, auch Gefahren zum Vorschein. Berners-Lee selbst hat 2017, zum 28. Geburtstag  des WWW in einem Brief\footnote{\url{https://webfoundation.org/2017/03/web-turns-28-letter/}} die drei wichtigsten Probleme für das Web benannt. Eines dieser Probleme lautet "`Wir haben die Kontrolle über unsere persönlichen Daten verloren"'. Um diese Kontrolle wiederzuerlangen, wird unter der Leitung von Berners-Lee seit 2015 die Spezifikation Solid (Social Linked Data) entwickelt, welche eine Technologie für sichere, dezentralisierte Speicherung von Daten jeglicher Art bereitstellt. Dieser Beleg beschäftigt sich mit den Grundprinzipien von Solid und soll einen Überblick über die Technologie schaffen. Ebenfalls werden Vor- und Nachteile des momentanen zentralisierten Konzepts, wie auch eines potenziell zukünftigen dezentralisierten Konzepts mit Solid beleuchtet.
+\end{abstract}
+
+\maketitle
+
+\section{Einleitung und Motivation}
+
+%%todo[inline]{Daten aus dem Abstract in die Einleitung integrieren}
+1989 hat Sir Timothy John Berners-Lee mit der Entwicklung des Hypertext Transfer Protocol (HTTP) sowie der Hypertext Markup Language (HTML) den Grundstein für das World Wide Web (WWW) gesetzt und es damit möglich gemacht, Informationen global in Sekundenschnelle zu teilen.\cite{birth-web} Zwei Jahre später, am 20. Dezember 1990 ging dann die erste Website\footnote{Rekonstruktion: \url{http://info.cern.ch/hypertext/WWW/TheProject.html}} online.
+
+Seitdem ist viel geschehen - das Web hat fast alle Lebensbereiche weltweit durchdrungen und unseren Umgang mit Informationen grundlegend verändert. Das World Wide Web hat es möglich gemacht Informationen praktisch sofort global erreichbar zu machen - ob es die neuste medizinische Erkenntnis, veröffentlicht in einem Paper, oder die Geburt des Neffen am anderen Ende der Welt ist. Mit dem Wachstum des WWW ist dieses wesentlich komplexer geworden und muss sich mit Themen wie Authentifizierung, Datenspeicherung, Datenverlinkung und Datenschutz beschäftigen. Aktuell können über das WWW viele verschiedene Anwendungen und Dienstleistungen verwendet werden, welche von vielen verschiedenen Unternehmen global entwickelt und gewartet werden. Dies resultiert in einem komplex aufgesponnenen Netz an Anwendungen und angebotenen Dienstleistungen, welche Funktionalitäten entweder selbst entwickeln oder von anderen Anbietern integrieren, was zu unzähligen unterschiedlichen Protokollen, Systemen und Datensilos führt. Dieser zentralisierte Ansatz, so bezeichnet, weil die Daten und Dienstleistungen für die einzelnen Anwendungen zentral bei ihrem Entwickler oder Dienstleistern von diesem liegen, ist aber nicht der einzige Ansatz, wie das World Wide Web aufgespannt sein könnte. 
+%%todo[inline]{Unten stehender Satz muss besser formuliert werden, da gerade Semantic Web sich nicht so anhören darf, als hätte TBL sich das spontan ausm Ärmel geschüttelt. Ich überlege während ich weiterschreibe}
+
+Berners-Lee selbst hat 2017, zum 28. Geburtstag  des WWW in einem Brief\footnote{\url{https://webfoundation.org/2017/03/web-turns-28-letter/}} die drei wichtigsten Probleme für das Web benannt, welches sich großteils zentralisiert strukturiert hat. Mitunter thematisiert er hier den Kontrollverlust der Nutzer:innen bezüglich ihrer Daten unter dem Punkt "`Wir haben die Kontrolle über unsere persönlichen Daten verloren"'. Um diese Kontrolle wiederzuerlangen, wird unter der Leitung von Berners-Lee seit 2015 die Spezifikation Solid (Social Linked Data) entwickelt. Die Technologie basiert hierbei auf Linked Data und dem Semantic Web, weitere Konzepte, welche unter der Leitung von Berners-Lee vorab entwickelt wurden und heutzutage schon teilweise Einsatz finden. Solid erlaubt die sichere, dezentralisierte Speicherung von Daten jeglicher Art und ermöglicht so den Aufbau großer dezentralisierter, interoperabler Systeme.
+
+In diesem Beleg werden zuerst in Kapitel \ref{section:relatedWork} relevante Publikationen in diesem Themengebiet vorgestellt. In Kapitel \ref{section:wasIstSocialLinkedData} werden die theoretischen Grundlagen zusammen gefasst und es wird erklärt, worum genau es sich bei der Technologie handelt. Kapitel \ref{section:wasSindDatensouveräneWebanwendungen} geht auf datensouveräne Webanwendungen ein und wie diese mit der Solid Technologie entwickelt werden können. Anschließend werden die Probleme des aktuell gängigen zentralisierten Konzepts in Kapitel \ref{section:problemeUndGefahrenDesAktuellenZentralisiertenKonzepts} aufgezeigt. Kapitel \ref{section:wasSindDieVorteileVonSolid} geht auf das Potential der Solid Technologie ein, besonders bezogen auf den Effekt bei einem globalen Einsatz, auch in großen Entwicklungsteams. Darauf folgend wird in Kapitel \ref{section:standDerEntwicklung} das Solidproject vorgestellt und der aktuelle Stand der Entwicklung zusammengefasst und in Kapitel \ref{section:anwendungsbeispiel} werden Anwendungsbeispiele vorgestellt. Danach werden in Kapitel \ref{section:wasSindPotentiellePitfallsUndGefahren} die potentiellen Pitfalls und Gefahren aufgezeigt. Abschließend schneidet Kapitel \ref{section:alternativeKonzepte} ein paar alternative Konzepte an, welche auch mit Solid kombiniert werden können, und Kapitel \ref{section:zukunftsausblick} gibt einen kurzen Ausblick in die Zukunft.
+
+
+\section{Related Work: andere Paper und was die da gemacht haben (unsere Quellen)}\label{section:relatedWork}
+ \todo[inline]{Zum Schluss/ Während die Quellen an den richtigen Stellen integriert werden}
+
+Der Solid Technologie liegen unter anderem die Konzepte Linked Data und das Semantic Web zugrunde. Diese wurden schon vor der Entwicklung der Solid-Technologie definiert \cite{blumauer2006semantic}.
+In 2016 haben Sambra et al. eine Solid Beispielanwendung basierend auf schon definierten W3C Protokollen implementiert und so gezeigt, dass mit dem neuen Paradigma ein dezentralisiertes Netz an Sozialen Webanwendungen realisierbar ist \cite{sambra2016solid}.
+Es gibt viele weitere Wissenschaftler:innen, die sich mit der Technologie und ihren Einsatzmöglichkeiten auseinandersetzen, darunter auch ...
+Solid in Kombination mit Blockchain zur Verifizierung ~\cite{ramachandran2020towards}
+Entwicklung von dezentralisierten Soziale Netzwerke~\cite{yeung2023decentralization}.
+Solid Data Spaces ~\cite{meckler2023web}
+- Paper von Both 
+
+
+\label{section:grundlagen}
+\section{Grundlagen}
+In diesem Kapitel soll gezeigt werden, welche Konzepte im momentanen Web eine Rolle spielen, um die Grundlagen für die Solid-Technologie zu legen und später Vor- und Nachteile aufzuzeigen.
+
+\label{section:zentralisiertesKonzept}
+\subsection{Das zentralisierte Konzept}
+Die Solid-Technologie bietet ein alternatives Konzept zur Vernetzung von Informationen im Internet. Um zu verstehen, wo die Stärken und Schwächen der Solid-Technologie liegen, muss erst etabliert werden, wie aktuell Informationen und Daten im Internet gespeichert und abgerufen werden.
+
+Ein Beispiel soll zeigen, wie der momentane Stand des Internets ist, wenn es um Datenspeicherung und das Abrufen dieser Daten geht. Dazu soll eine fiktive Social Media Anwendung genutzt werden. Auf dieser registrieren sich Nutzer:innen, indem sie ein Formular auf der Webseite der Plattform ausfüllen. In diesem werden Name, Geburtsdatum, Geschlecht und E-Mail-Adresse angegeben. Schließen der/die Nutzer:in die Registrierung ab, werden die eingegebenen Informationen verarbeitet und auf den Servern der Plattform gespeichert. Diese Daten sind nun im Besitz der Plattform - das Unternehmen hinter der Social Media Anwendung kann nun, durch die Zustimmung der Geschäftsbedingungen, auf diese Daten zugreifen und sie für eigene Zwecke nutzen. Diese Daten, aber auch die von vielen anderen Nutzer:innen, werden also zentral bei der Plattform gespeichert und bei Bedarf über diesen Speicher abgerufen.  
+
+Möchte sich ein:e Nutzer:in nun bei einer zweiten Social Media Plattform anmelden, beginnt die Prozedur von neuem. Ein weiteres Formular zur Registrierung wird aufgerufen, Daten müssen neu eingegeben werden und diese Informationen müssen wieder verarbeitet und gespeichert werden. Dieser Prozess findet bei vielen Internetnutzer:innen häufig statt - bei jeder Registrierung müssen diese Daten eingegeben werden, was darin resultiert, dass die eingegebenen Informationen in vielfacher Ausführung auf vielen Servern bei unterschiedlichen Unternehmen oder Anbietern liegen. 
+
+Dieses Konzept kann nun auf Anwendungen außerhalb des Social Media Kontextes übertragen werden. Hier muss es nicht um die Daten von Personen gehen - es kann auf vieles angewandt werden, wie beispielsweise die Implementierung einer Authentifizierung, oder das Hinzufügen einer neuen Schnittstelle. Alles läuft über die internen Server, erfordert Speicherplatz und Programmieraufwand, und muss von kompetenten Personal verwaltet und gewartet werden.
+
+\label{section:wasSindDatensouveräneWebanwendungen}
+\subsection{Was sind datensouveräne Webanwendungen?}
+Datensouveräne Webanwendungen sind ein Begriff welcher häufig in Kombination mit dezentralisierten Konzepten verwendet werden, da sie Elemente des zentralisierten Systems so umsetzen, dass Nutzer:innen mehr Mitbestimmung über ihre Daten besitzen.
+In SoK: Data Sovereignty Kapitel 2. Overview - Data Sovereignty~\cite{cryptoeprint:2023/967} beschreiben Ernstberger et. al als zentralen Aspekt von datensouveränen Frameworks und Anwendungen - hier Webanwendungen - den Nutzer:innen die volle Kontrolle über die Verwendung und Speicherung ihrer personenbezogenen Daten zu gewährleisten. Hierbei können die Nutzer:innen sämtliche Anpassungen und Verwendungsfälle ihrer Daten verfolgen und anpassen. Damit sind Nutzer:innen in der Lage Verletzungen ihrer Privatsphäre zu erkennen und vorzubeugen.
+
+Der Wunsch, Datensouveränität durchzusetzen begründet sich in dem Ziel/Wunsch eine dezentralisierte Gesellschaft zu haben, die vollständig von ihren Nutzer:innen kontrolliert wird. 
+
+Datensouveränität lässt sich noch weiter aufschlüsseln und modellieren, wie von Ernstberger et. al.~\cite{cryptoeprint:2023/967} beschrieben.
+
+\todo[inline]{Datensouveränität allgemein sehen, nicht nur auf Einzelperson (Da ist Datenschutz)
+Ich will effizient, automatisiert Daten verarbeiten -> das geht mit Solid
+Man kann direkt einsteigen und datensouverän mit Anbietern arbeiten
+-> Data Recycling, Data Reuse
+klassisch Datenmüll, Inkonsistenzen -> Solid ist in RDF mit fester Id und Webadresse -> mit den richtigen Rechten ist es wieder auflösbar}
+
+
+\label{section:wasIstDasSemanticWeb}
+\subsection{Was ist das Semantic Web?}
+
+Das sogenannte Semantic Web, oder semantisches Web, spielt eine große Rolle für die Dezentralisierung von Daten. Der Begriff der Semantik beschreibt in der Linguistik die Bedeutungslehre, die sich mit dem Sinn und der Bedeutung von Sprache befasst \cite{blumauer2006semantic}.
+Der Begriff "`Semantic Web"' geht auf Tim Berners-Lee zurück, welcher 1998 die "`Semantic Web Road Map"' veröffentlichte, in welcher er den Begriff "`The Semantic Web"' verwendete um ein Netz beschreibt, welches wie eine globale Datenbank aufgebaut ist. Ziel dieser Architektur ist, dass nicht nur Menschen sondern auch Maschinen oder Programme die Struktur der Daten und ihre Beziehung zueinander verstehen können, und so maschinelles Lernen noch effektiver eingesetzt werden kann \cite{bernerslee1998semanticwebroadmap}.
+
+Tim Berners-Lee unterscheidet in seinem TED-Beitrag ~\cite{TED.2010} "`The next Web of open, lined data"' den Begriff "`Dokument"' von dem Begriff "`Daten"'. Als Dokument werden Seiten im Internet bezeichnet, während Daten die Informationen in diesen Dokumenten beschreiben. 
+
+Berners-Lee beschreibt, dass Daten an sich nicht nutzbar sind, wenn sie nicht implementiert und visualisiert werden. Ebenfalls ist die Menge an Daten essentiell, um sie verwenden zu können. Der Begriff, den er in diesem Beitrag vorstellt, heißt "`Linked Data"', welcher beschreibt, dass alle Informationen im World Wide Web zu finden, und miteinander verknüpft sind, um durch diese Menge an Daten den Nutzen des Internets zu maximieren~\cite{TED.2010}. 
+
+Während das Internet und Daten generell für Menschen meist problemlos zu verstehen sind, ist es für eine Maschine schwerer, Zusammenhänge herzustellen. Linked Data soll dieses Problem lösen, in dem die Verbindungen zwischen den einzelnen Daten sichtbarer werden, und so auch Algorithmen oder Programme Beziehungen zwischen den Informationen herstellen können - realisiert wird dies durch die Verwendung von verschiedenen Ontologien \cite{bernerslee1998semanticwebroadmap}. Damit spielt Linked Data eine große Rolle im Konzept des Semantic Web.
+
+Um das Linked Data System effizient nutzen zu können muss eine Technologie bestehen, welche diese Daten sinnvoll verwalten kann. Solid basiert dabei auf RDF und anderen Technologien des Semantic Webs. RDF steht für "`Resource Description Framework"' und bezeichnet eine Methodik, mit welcher Informationen im Internet repräsentiert werden. Dabei wird ein graphenbasiertes Datenmodell angewandt, welches aus Knoten besteht. Diese Knoten können zu Tripeln zusammengefasst werden, sodass ein Beziehung entsteht, welche man mit der "`Subjekt-Prädikat-Objekt"'-Struktur beschreiben kann.~\cite{Wood:14:RCA, Bizer2009LinkedD} 
+
+Beide Knoten, also das Subjekt und das Objekt, als auch das Prädikat sind sogenannte Ressourcen. Eine Ressource kann vereinfacht gesagt alles sein - ein Gegenstand, ein Konzept, eine Zahl, ein Wert oder eine Eigenschaft um einige Beispiele zu nennen. Verbindet man nun zwei Knoten mit einer Eigenschaft setzt man diese in Beziehung, und ein Tripel, auch RDF Statement genannt, entsteht. Dabei nimmt ein Knoten die Rolle des Subjekts an, während das andere die des Objekts annimmt. Die Eigenschaft, also das Prädikat, beschreibt nun den Zusammenhang zwischen den Knoten.~\cite{Wood:14:RCA, Bizer2009LinkedD}
+
+Für weitere Informationen zu RDF und anderen Ontologien wird auf das Handbook on Ontologies (2009) von Steffen Staab und Rudi Studer verwiesen.~\cite{staab2009handbook}
+
+\label{section:wasIstSocialLinkedData}
+\section{Was ist Social Linked Data?}
+
+In diesem Kapitel werden zuerst die Grundlagen und die Herkunft von Social Linked Data, kurz Solid, erläutert und anschließend die Solid-Technologie konzeptuell vorgestellt. Dabei soll der Fokus auf dem Solid-Ökosystem liegen.
+
+\subsection{Die Herkunft und Grundlagen von Solid}
+% \todo[inline]{Weiter eingehen auf Semantic Web und Linked Data}
+
+Die wichtigste Faktoren bei Social Linked Data sind die Beziehungen, mit welchen die Daten untereinander verknüpft sind, um effizient auf alle zugehörigen Daten zu einem Thema zugreifen zu können. Fiktiv gesprochen: Existieren alle Informationen im Internet, und sind diese untereinander verbunden, befindet sich das gesamte menschliche Wissen an einem Ort, anstatt verstreut in persönlichen Datenbanken. Dies soll beispielsweise in der Wissenschaft genutzt werden können, um Fragen zu beantworten, die durch normale Suchmaschinen nicht beantwortet werden können, da noch niemand diese spezifische Frage gestellt hat. Durch die Verlinkung von Daten soll dies auf Grund der enormen Anzahl an Informationen möglich sein, welche sonst verstreut und unzugänglich wäre ~\cite{TED.2010}.
+
+Die Bezeichnung "`Social"' von Social Linked Data bezieht sich dabei auf die Verwendung des Linked Data Konzeptes bei persönlichen Daten. Ähnlich wie bei wissenschaftlichen Themenbereichen, können auch beispielsweise Beziehungen zwischen Personen als Daten gespeichert werden. Berners-Lee beschreibt, dass durch die Nutzung dieser Technik, sowohl Anwendungen die Nutzerdaten verwenden, als auch die Nutzer:innen dieser profitieren, da so die Grenzen zwischen den Plattformen aufgelöst, und eine Interoperabilität hergestellt werden kann. Ziel ist es, dass jede:r Nutzer:in seinen Teil zu diesem Projekt beiträgt, und ihr Wissen dem World Wide Web bereitstellt, um einem vollständigen, verbundenen Internet einen Schritt näher zu kommen  ~\cite{TED.2010}.
+
+\subsection{Das Solid-Ökosystem}
+
+%%A decentralized social networking framework described is based on open, technologies
+%%such as Linked Data [Berners-Lee 2006], Semantic Web ontologies, open single-signon identity systems, and access control. ~\cite{yeung2023decentralization}
+
+Solid kann man als ein Regelwerk und Toolkit für die Entwicklung von dezentralisierten sozialen Anwendungen basierend auf Linked Data verstehen~\cite{ramachandran2020towards}. Anwendungen, die ein Teil des Solid-Ökosystems sind - also entsprechend der definierten Regeln kommunizieren - bilden ein Netz, in dem Nutzerdaten dezentralisiert in sogenannten Personal Online Datastores (Pods) gespeichert werden. Die Nutzer:innen haben Zugriff auf ihre Pods und können diese und die darin gespeicherten Daten komplett unabhängig verwalten. Die Webanwendungen speichern Nutzerdaten nicht mehr selbst ab, sondern greifen auf die einzelnen Pods der Nutzer:innen zu. Somit werden die persönlichen Daten der Nutzer:innen nicht mehr von mehreren Webanwendungen gespeichert, welche dann für die Datenverwaltung und Speicherung verantwortlich sind, sondern stattdessen in den persönlichen Speicherservices der Nutzer:innen, also ihren Pods.
+
+%%Solid ist eine dezentralisierte Plattform für Soziale Webanwendungen. Die Daten der Nutzer:innen werden unabhängig von diesen verwaltet und in einem über das Web erreichbaren, persönlichen Datastore gespeichert. Diverse Webanwendungen können dann auf die in ihrem persönlichen Speicherservice, oder auch Pod (Personal Online Datastore) genannt, gespeicherten Daten zugreifen.
+
+Dieser Speicherservice kann entweder auf einer eigenen Maschine aufgesetzt und verwaltet werden, oder man nutzt den Service eines sogenannten Pod-Providers. Sambra et al.~\cite{sambra2016solid} vergleichen diese Pod-Provider in ihrem ursprünglichen Paper mit Firmen, welche Cloudspeicher bereitstellen, wie beispielsweise Dropbox.
+
+Die Nutzer:innen können ihre Pods nicht nur direkt selbst managen, sondern auch mehrere Pods gleichzeitig bei verschiedenen Pod Service Anbietern erstellen und verwenden und hierbei auch Berechtigungen - welche Anwendungen beispielsweise auf welche Daten zugreifen können - festlegen.
+
+Um die Funktionsweise eines Pods besser nachvollziehen zu können, werden nachfolgenden die wichtigsten Begriffe sowie der Aufbau eines Podservers erläutert
+
+Im Solid-Ökosystems werden Daten in den bereits erwähnten Pods abgelegt. Innerhalb dieser Pods ist eine Containerhierarchie, welche in Form eines Uniform Resource Identifier(URI) dargestellt wird und sich mit der Ordnerstruktur eines Dateisystems vergleichen lässt. Innerhalb dieses Dateisystems können RDF - basierte Daten, sowie Binärdaten als Ressourcen abgelegt werden. Die Pods werden von einem Pod-Serviceprovider verwaltet, welcher dieses Dateisystem zur Verfügung stellt. Darüber hinaus muss der Server Protokolle für Linked Data Platform(LDP)\footnote{\url{https://www.w3.org/TR/ldp/}} support, Zugriffskontrolle über Web Access Control(WAC)\footnote{\url{https://solidproject.org/TR/wac}} und/oder Access Control Policy(ACP)\footnote{\url{https://solidproject.org/TR/acp}} und Notification\footnote{\url{https://solidproject.org/TR/notifications-protocol}}. Zur Datenmanipulation und Kommunikation wird das HTTP-Protokoll verwendet welches RESTful im Sinne der Vorgabe des LDP z.B. die Methoden GET, POST/PUT, PUT/PATCH verwendet. Optional kann ein Podservice auch SPARQL\footnote{\url{https://www.w3.org/TR/sparql11-query/}} unterstützen.
+Zur Identifizierung von Pod-Usern gibt es einen Identitätsdienst, welcher in den meisten Serverimplementationen bereits integriert ist und das WebID Protokoll\footnote{\url{https://www.w3.org/2005/Incubator/webid/spec/identity/}} verwenden muss. Diese WebID dient im Solid-Ökosystem als Nutzername, mit welchen man sich bei Solid Apps identifizieren kann. Die Authentifizierung wird hierbei über das Protokoll Solid-OIDC\footnote{\url{https://solidproject.org/TR/oidc}} geregelt.
+Entwicklende für Solid-Apps müssen also bereits bei der Entwicklung berücksichtigen, dass auch auf der Client-Seite die Standards und Protokolle eingehalten werden müssen.~\cite{sambra2016solid}
+
+Während die Dezentralisierung von persönlichen Daten ein relevanter Aspekt von Solid ist, ist schnell ersichtlich geworden, dass das Konzept aufgrund der Modularisierung und Dezentralisierung verschiedener benötigter Funktionalitäten von Webanwendungen und dem damit einhergehenden Vernetzungscharakter und die Interoperabilität ein enormes Anwendungspotential hat.
+
+\label{section:problemeUndGefahrenDesAktuellenZentralisiertenKonzepts}
+\section{Probleme und Gefahren des aktuellen zentralisierten Konzepts}
+%\begin{figure}
+%\centering
+%\includesvg[width=0.35\paperwidth]{images/centralized_concept.svg}
+%\caption{Zentralisierte Technologie - Der Nutzer hat keine Kontrolle über seine Daten, da sie in mehrfacher Ausführungen bei verschiedenen Parteien liegen}
+%\end{figure}
+Daten zentralisiert zu speichern bringt einige Probleme und Gefahren mit sich. Ein Thema des zentralisierten Speichern von Daten ist der Missbrauch dieses Konzepts - die fehlende Souveränität der Daten ist ein zentraler Aspekt im Überwachungskapitalismus. In dem Buch "`Das Zeitalter des Überwachungskapitalismus" von Shoshana Zuboff beschreibt die Autorin den Begriff wie folgt: 
+
+\textit{"Überwachungskapitalismus beansprucht einseitig menschliche Erfahrung als Rohstoff zur Umwandlung in Verhaltensdaten. Ein Teil dieser Daten dient der Verbesserung von Produkten und Diensten, den Rest erklärt man zu proprietärem Verhaltensüberschuss, aus dem man [...] Vorhersageprodukte fertigt, die erahnen, was sie jetzt, in Kürze oder irgendwann tun."}~\cite{zuboff2018ueberwachungskapitalismus}.
+
+Große Unternehmen nutzen also die Daten von Nutzer:innen um basierend darauf Vorhersagen zu treffen, wie der/die Nutzer:in handelt. Diese Prognosen können dann an Werbetreibende verkauft werden - je genauer und je wahrscheinlicher es ist, dass der/die Nutzer:in so handelt wie vorhergesagt, desto mehr steigt die Prognose an Wert. So ist es den Unternehmen möglich, Verhalten der Nutzer:innen zu lenken und so Kaufentscheidungen etc. zu beeinflussen~\cite{zuboff2018ueberwachungskapitalismus}.
+
+Dies führt aber auch zu anderen Problemen - 2018 wurde bekannt, dass das Datenanalyse-Unternehmen Cambridge Analytica basierend auf Facebook-Daten Einfluss in der US-Präsidentschaftswahl 2016 hatte. Als Teil der Wahlkampagne Donald Trumps wurden Nutzer:innen durch sogenanntes "`micro-targeting" politisch beeinflusst, was zu einem Wahlerfolg Trumps geführt haben könnte ~\cite{isaak2018cambridgeanalytica}. Weiter wird das Thema in dem Projekt und dem gleichnamigen Film "`The Social Dilemma"\footnote{\url{https://www.imdb.com/title/tt11464826/}} ausgeführt, in welchem gezeigt wird, wie große Tech-Unternehmen mit Nutzerdaten sammeln und diese durch Algorithmen aufbereiten, um Geld zu verdienen.
+
+Abseits des Datenschutzes gibt es noch ein weiteres Problem mit persönlichen Daten - die Aktualisierung dieser. Da jedes Unternehmen einen eigenen Stand der Daten einer Person besitzt, ist es für diese Person mit einem hohen Aufwand verbunden, bei jedem Dienst einzelne Daten zu ändern, sodass alle Daten auf der aktuellen Version sind. Bei Umzug, Namensänderung oder ähnlichen, nicht selten aufkommenden Änderungen sind Daten also schnell veraltet, was sowohl für Nutzer:innen als auch Serviceanbieter unerwünscht, und mit einem Mehraufwand verbunden ist.
+
+Neben den Nachteilen im Bezug auf Nutzerdaten gibt es weitere betriebswirtschaftliche und technische Aspekte, welche gegen die Nutzung einer zentralisierten Datenspeicherung sprechen. Problematisch ist beispielsweise die enorme Einstiegshürde für neue Unternehmen und Anwendungen am Markt. Während große Unternehmen sowohl Services anbieten, als auch über eine Menge Daten verfügen, besitzen sie einen Vorteil gegenüber neuen Anbietern, welche wenige bis keine Daten besitzen. Der Wettbewerb wird dementsprechend eingeschränkt, da es den neuen Anbietern durch die fehlenden Datenmengen nicht möglich ist, mit den bereits am Markt etablierten Unternehmen mitzuhalten oder diese zu entmachten. Dies führt zu Verlust und Verringerung der Innovation, da neue, innovativere Anwendungen schwerer am Markt Fuß fassen können.
+
+Auf technischer Seite ist ein wichtiger Punkt, dass eine zentrale Speicherung der Daten ein sogenannter Single Point of Failure ist. Gibt es technische Probleme, oder der Server, worauf die Daten gespeichert sind, ist aus anderen Gründen nicht erreichbar, ist die Anwendung nicht oder nur stark eingeschränkt nutzbar. Werden Daten dezentral gespeichert, wie beispielsweise unter Nutzung des Solid-Konzepts, existiert dieser Single Point of Failure in dieser Form nicht mehr. Wenn Server ausfallen, auf denen Pods gehostet werden, ist bei der richtigen Anwendung des Solid-Konzepts nur ein kleiner Teil der Daten betroffen.
+
+Mit der Nutzung eines zentralisierten Datenspeicherungsverfahrens geht ebenfalls die aktive Wartung eines solchen einher. Dies resultiert in Aufgaben wie beispielsweise Skalierbarkeit des Datenspeichers, der Versionsverwaltung oder Archivierung, welche bewältigt werden müssen. Dies sind Aspekte, die einem Unternehmen nicht nur Geld sondern auch Zeit kosten. Besonders der Aspekt der nachträglichen Skalierung ist ein essentieller Punkt und kann sich für wachsende Unternehmen als Herausforderung herausstellen, wenn sich damit nicht ausreichend auseinandergesetzt wird.
+Daraus kann man ebenfalls das erhöhte Fehlerpotential ableiten, welches bei einem zentralisierten Konzept einkalkuliert werden muss. Wird das Datenmanagement vernachlässigt oder inadäquat betrieben, kann sich dies massiv auf die Leistung der Anwendung auswirken. Auch hier kann man wieder auf den Single Point of Failure verweisen. Durch das Solid-Konzept können diese Probleme vermieden werden. Datenmanagement wird so einfacher, da Änderungen der Daten nicht auf dem eigenen Server stattfinden, sondern von den Verwalter:innen der einzelnen Pods. 
+
+Betrachtet man das gesamte Netz, verursacht ein zentralisiertes Konzept viel Datenmüll. Unternehmen speichern Daten, welche viele andere Unternehmen bereits ebenfalls gespeichert haben. Bei der vorgesehenen Nutzung des Solid-Konzepts existieren keine Kopien von Daten, da diese für die Verarbeitung von den jeweiligen Pods angefragt und verwendet werden. So existieren die Daten nur einmalig im Pod und nicht vielfach auf verschiedenen Servern von unterschiedlichen Firmen, was zur Folge hat, dass Unternehmen Speicherplatz einsparen können.
+
+% Nachteile zentralisiertes Konzept:
+%- Zentralisierte Daten bedeutet höheres Verlustrisiko (Single Point of Failure)
+%- Zentralisierte Systeme erfordern Management, was zeitliche und monetäre Kosten zur Folge hat 
+%-> Themen wie Skalierbarkeit sind wichtig
+%- Potential für Fehler ist höher und Kosten können steigen (bspw. durch schlechtes Datenmanagement)
+%(- Zugriffsgeschwindigkeit ist langsamer, da alle Datenanfragen auf einen Server laufen)
+%(- Data Breaches/Leaks sind wahrscheinlicher, da Nutzerdaten vielfach auf vielen Servern von unterschiedlichen Firmen existieren)    
+
+% Inferiert:
+% Ein weiterer Nachteil, welcher das aktuelle zentralisierte Konzept gegenüber Solid hat, ist dass die Nutzer:innen ihre Daten nur eingeschränkt selbst manipulieren können. Beispielsweise können Konklusionen über Verhaltensmuster der Nutzer:innen gezogen werden, welche sich nicht direkt von den Nutzer:innen anpassen lassen - die Algorithmen, für beispielsweise personalisierte Inhalte und Werbung rechnen aber basierend auf diesen Informationen und die Resulate sind womöglich unerwünscht. Zb. Wenn jemand mit Rauchen aufhören möchte aber die ganze Zeit Zigarettenwerbung und Rauchercontent bekommt oder so
+
+% Außerdem verursacht die Speicherung von Nutzerdaten von verschiedenen Unternehmen riesige Mengen an Datenmüll - alles wird unnötig mehrfach gespeichert.
+
+% - Daten nicht direkt bearbeitbar von User:innen
+% Viel Datenmüll, mehrfach gespeicherte Daten etc. 
+
+%Innovation von neuen Features aktuell blockiert (siehe Ruben Talk)
+
+\label{section:standDerEntwicklung}
+\section{Stand der Entwicklung von Solid}
+Seit 2018 wird durch die W3C Solid Community Group(CG) an den Spezifikationen für Solid-Technologien gearbeitet. 
+Auf der Webseite der CG\footnote{\url{https://solidproject.org/}} werden Neuerungen in einem ständig aktualisierten technischen Report~\footnote{\url{https://solidproject.org/TR/}} zusammengefasst. Dieser umfasst unter anderem das Solid Protokoll\footnote{\url{https://solidproject.org/TR/protocol}}, welches die im Solid-Ökosystem genutze Teminologie erläutert und Anforderungen an Betreibende von Solid-Servern oder Apps bezüglich der zu nutzenden Protokolle und Standards für Web, Identität, Authentifizierung sowie Autorisierung festschreibt.
+Ebenfalls finden Anwendene Informationen für den Einstieg in Solid als User. Es wird eine Übersicht über bereits existierende Anbieter für Pods mit Information über dessen Serverimplementation und Hosting-Standort geboten. Möglich ist auch einen Pod-Server selbst zu hosten. Die CG stellt dazu eine Liste verfügbarer quelloffener Serverimplementationen bereit. Diese umfassen z.B. den CommunitySolidServer (CSS)~\footnote{\url{https://github.com/CommunitySolidServer/CommunitySolidServer/}} und Node Solid Server~\footnote{\url{https://github.com/solid/node-solid-server}} für Node.js sowie Implementierungen in PHP und Rust.
+Für Developer von Apps finden sich von Solid genutzte Bibliotheken und Tools und ein Tutorial um die Entwicklung von Solidapps zu erleichtern.
+Sowie eine Übersicht der CG bekannten Apps für Solid vorhanden mit welchen man das Ökosystem von Solid am praktischen Beispiel erkunden kann.
+
+\label{section:anwendungsbeispiel}
+\section{Anwendungsbeispiel}
+Um Solid-Technologien anwenden zu können, ist die Voraussetzung die Registrierung an einem Solid-Server, welcher die Pods bereitstellt. Wie in \ref{section:standDerEntwicklung} erwähnt, gibt es bereits verschiedene Serverimplementationen, eine Liste von Pod-Providern und ebenfalls die Möglichkeit den Pod-Server selbst zu hosten. Im ersten Beispiel soll eine übliche Interaktion zwischen User, Pod-Provider und einer Solid Anwendung gezeigt werden. Im zweiten Beispiel wird eine Demoanwendung aus~\cite{DBLP:conf/i-semantics/HenselmannKSS0H22} vorgestellt, welche exemplarisch die Möglichkeit, das Solid-Ökosystem zur Nutzung der Abwicklung eines Kreditantrags, zeigt. 
+
+\subsection{Beispiel: Privatnutzung einer Filmdatenbank}
+In folgendem Beispiel wird die Implementation CSS verwendet, welche über die URI https://pods.solidcommunity.au/ erreichbar ist. Nach einer Registrierung mit E-Mail und Passwort kann man nun seinen ersten Pod anlegen und erhält eine WebID. Ein Pod enthält nach Erstellung eine leere README, sowie die Ressource /profile/card, welche den Pod identifiziert und die WebID beinhaltet. Man ist hierbei nicht nur auf einen Pod limitiert, sondern kann mehrere Pods anlegen und diese mit den Daten befüllen, welche für die Anwendungen welche man damit nutzen will, notwendig sind. Im Beispiel wird ein Pod mit der URI https://pods.solidcommunity.au/example/ verwendet.
+Nachdem nun ein Pod, in dem Daten und Ressourcen abgelegt werden können und eine dazugehörige WebID vorhanden ist, kann man alle Apps, die der Solid-Spezifikation folgen, nutzen. Im Beispiel wird die App Solidflix\footnote{\url{https://oxfordhcc.github.io/solid-media/}}, eine Plattform zum Teilen für Filmempfehlungen und Sammlung einer persönlichen Watchlist, verwendet. Auf der Startseite verbindet man sich nun mit seinem Pod, indem man die BaseURI seines Anbieters, in unserem Fall https://pods.solidcommunity.au/, angibt. Durch eine Weiterleitung gelangt man nun auf den eigenen Podserver und kann wählen, welcher der Pods mit Solidflix verbunden werden soll. Nachdem die Freigabe für die App erteilt wurde, kann das Angebot von Solidflix uneingeschränkt genutzt werden, ohne Erstellung eines gesonderten Zugangs.
+\begin{figure}
+\label{fig:private_example}
+\centering
+\includesvg[width=0.35\paperwidth]{images/solidflixneu.svg}
+\caption{Der Dienst Solidflix greift auf den Podprovider zu, der nach Authentifizierung den Nutzer wählen lässt, welche WebID/welcher Pod freigegeben werden soll.}
+\end{figure}
+Alle anfallenden Daten, die bei der Nutzung erzeugt werden, werden direkt im eigenen Pod gespeichert. Solidflix legt hierbei innerhalb des eigenen Pods den Container movies/ an, in welchem die gewählten Filme, welche z.B. auf die Watchlist gesetzt wurden, als Ressource unter der URI https://pods.solidcommunity.au/example/movies/<Filmtitel> abgelegt werden. Hinter der Ressource verbirgt sich ein Instanz eines knowledge graphs(KG), welche als Textdatei im Format text/turtle vorliegt und die beschreibenden Tripel der Ressource enthält. Dazu gehören Typ, Erstell- und Änderungsdatum der Ressource, welche im Beispiel vom Typ \url{https://schema.org/WatchAction} ist. die weiteren Tripel geben Auskunft über Name, Erscheinungsdatum und Kurzbeschreibung des Films. Ebenfalls wird das Titelbild des Films in Form einer URI bereitgestellt und sameAs - Beziehungen zu den Filmdatenbanken IMDB und theMovieDB hergestellt, welche beschreiben, dass die Ressource innerhalb des Pods die gleiche Sache beschreibt wie die Ressourcen der Filmdatenbanken.
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[captionpos=b, caption=Ressource des Films Zurück in die Zukunft II welche im Beispielpod unter https://pods.solidcommunity.au/example/movies/back-to-the-future-part-ii abgelegt wurde. Zur besseren übersicht wurden Prefixe eingeführt., label=lst:ressourcebttf2,frame=single]
+@prefix example: <https://pods.solidcommunity.au/example#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema:  <https://schema.org/#> .
+
+example:movies/back-to-the-future-part-ii#it
+    dct:created         "2024-01-24T09:51:05.553Z"^^xsd:dateTime;
+    dct:modified        "2024-01-24T09:51:05.553Z"^^xsd:dateTime;
+    a                   schema:WatchAction;
+    
+    schema:name         "Back to the Future Part II";
+    schema:description  "Marty and Doc are at it again in this wacky sequel to the 1985 blockbuster as the time-traveling duo...";
+    schema:image        "http://image.tmdb.org/t/p/original/hQq8xZe5uLjFzSBt4LanNP7SQjl.jpg?api_key=e70f4a66202d9b5df3586802586bc7d2";
+    schema:datePublished "1989-11-22T00:00:00.000Z"^^xsd:dateTime;
+    schema:sameAs       "https://www.themoviedb.org/movie/165", "https://www.imdb.com/title/tt0096874".
+\end{lstlisting}
+\end{minipage}
+\subsection{Beispiel: Enterprise Loan Request Use Case}
+In diesem Beispiel wird die Abwicklung eines Kreditverfahrens zwischen der Firma Nordwind AG, der Bank Grünbank sowie dem Steuerberater Dr. Ehrlich betrachtet. Es existieren mehrere Pod-Provider, welche den jeweils einzelnen Parteien mehrere Datenpods zur Verfügung stellen. Es existiert außerdem eine Solid App, welche für die einzelnen Parteien jeweils verschiedene Instanzen bereitstellt, mit jeweils an die Partei angepassten benötigten Features.Im Beispiel werden diese Instanzen als Nordwind App, Ehrlich App und Grünbank App bezeichnet. Das Sequenzdiagramm in \ref{fig:enterprise_example} zeigt vereinfacht den Ablauf des Prozesses. Die Nordwind AG möchte einen Kredit und muss hierfür der Bank geprüfte Daten der Kassenbuchhaltung zukommen lassen, welche bei der Steuerbuchhaltung von Dr. Ehrlich erstellt werden. Die Nordwind AG stellt hierfür über die Nordwind App ihre Transaktionsdaten im Nordwind Pod zur Verfügung. Über die Ehrlich App, können diese Daten nun verarbeitet werden, um das Dokument für die Kassenbuchhaltung zu erzeugen, welches im Ehrlich Pod abgelegt wird. Dieses Dokument wird über die Access Control List(ACL) für die Einsicht in der Grünbank App freigegeben. Die Bank kann die Entscheidung im Kreditverfahren treffen. Anschließend wird über die Ehrlich App der Zugriff auf das Dokument für Nutzer der Grünbank App wieder entzogen.
+
+\begin{figure}
+\label{fig:enterprise_example}
+\centering
+\includesvg[width=0.35\paperwidth]{images/esexample.svg}
+\caption{Abstrakte Beschreibung der Vorgänge im Prozess des Kreditverfahrens. Diagramm sinngemäß übersetzt aus ~\cite{DBLP:conf/i-semantics/HenselmannKSS0H22}} übernommen.
+\end{figure}
+
+Die Kommunikation zwischen den Apps und Pods erfolgt hier über die HTTP-Requests GET, POST und PUT.
+In ~\cite{DBLP:conf/i-semantics/HenselmannKSS0H22} wird ebenfalls ein Beispielvideo\footnote{\url{https://purl.org/solid-poc-app/demo}} bereitgestellt, welches den Vorgang im Detail erklärt.
+\label{section:wasSindDieVorteileVonSolid}
+\section{Was sind die Vorteile von SOLID?}
+
+% \todo[inline]{Alles lässt sich kombinieren und neue Funktionalitäten schaffen
+% Was brauchen wir dafür Datenformate, Webstandards; 
+% Alleine geht auch monolithisches System, bei zb 100 Leuten mit X neuen Features ist monolith 100000 komplexer
+% Verschiedene Anwendungen mit den gleichen Blöcken bedienen ("Netz an Dreiecken"); Ad-hoc, Dynamisch
+% }
+% \begin{itemize}
+%     \item Rollen- und Akteurenautorisierung und -authentifizierung\cite{8633673}
+%     \item his paper presents how these problems can be solved by adopting a decentralized approach to online social networking. With
+% this approach, users do not have to be bounded by a particular social networking service. This can provide the same or even
+% higher level of user interaction as with many of the popular social networking sites we have today\cite{yeung2023decentralization}
+% \end{itemize}
+
+%-> Wie sieht das aus mit der Definition von Standards?
+	%-> Abstimmung von APIs wird vermieden
+	%-> Authentifikation oder Identitätsmanagement muss nicht bei jeder Freigabe eingebaut werden
+		%-> Übergabe von einer Solidapp in einer Solidapp
+	%-> Boilerplatecode wird nicht mehr benötigt, da man Apps/Pods zwischenschalten kann
+	%-> Nur der eigentliche Code der Anwendung wird benötigt
+		%-> DSGVO, Authentifizierung, Login etc. können "outgesourced" werden
+		%-> Es entwickelt sich ein Ökosystem
+	%-> Einfache Einbindung von z.B. Chats
+ 
+In diesem Kapitel werden die Vorteile, die ein Solid-Ökosystem für Nutzer:innen und die Entwicklung haben könnte, beleuchtet. Die Vorteile der Technologie werden hierbei weiter kategorisiert in das mit Solid einhergehende Skalierungspotential und die Interoperabilität der Komponenten eines Solid-Ökosystems und die Vorteile bezüglich der dezentralisierten Datenspeicherung und -verwaltung. Dabei stellen wir die Prämisse auf, dass die Technologie breit eingesetzt wird, da in diesem Fall die Vorteile des Solid-Protokoll gut zu beleuchten sind.
+
+Ein Solid-Ökosystem stellt einige Anforderungen an die entwickelten Anwendungen und Systeme. Dazu zählen standardisierte Protokolle und Datenformate, welche Schnittstellen (Interfaces) für die verschiedenen Services und Anwendungen im Ökosystem definieren. Sämtliche Kommunikation zwischen den verschiedenen Modulen läuft über diese Schnittstellen. So ist zum Beispiel die Kommunikation zwischen Pod-Provider und Webanwendung fest definiert. Damit können sowohl Pod-Provider als auch Webanwendungen einfach ausgetauscht oder erweitert werden. 
+
+\label{subsection:vorteile:skalierbarkeitUndInteroperabilität}
+\subsection{Skalierbarkeit und Interoperabilität}
+
+%hohe Skalierbarkeit
+Dieses Konzept kann auf große Solid-Ökosysteme hochskaliert werden, für die ohne größere Absprache Anwendungen und Services entwickelt werden können. Diese bekommen über die definierten Protokolle einfach Zugriff zu den anderen Komponenten des Systems und können so autorisieren, authentifizieren und auf persönliche Daten zugreifen, ohne ein eigenes Authentifizierungssystem oder einen externen Service, wie beispielsweise ein Login über Facebook, integrieren zu müssen. Somit geht mit den definierten Standards eine hohe Interoperabilität innerhalb des Solid-Ökosystems einher.
+\cite{8633673}
+
+%hohe Interoperabilität
+Aus dieser hohen Interoperabilität können wir ein immenses Wachstumspotential schlussfolgern. Die Aufteilung von Webanwendung und Datenspeicherung erlaubt weitere Modularisierung. Damit lassen sich große Teile der Funktionalitäten auslagern, welche bei dem zentralisierten Konzept für Webanwendungen notwendig sind. So könnten zum Beispiel das Identitätsmanagement, das Einhalten der DSGVO~\footnote{https://dsgvo-gesetz.de/} und das Login von externen Services geregelt werden, welche miteinander kommunizieren und die Kommunikation zu den Pods regeln. Dies vereinfacht und verschnellert die Entwicklung von Webanwendungen, welche sich nur um ihre Business Logik kümmern müssen - der Rest wird ausgelagert. Dadurch entwickelt sich ein gesamtes Ökosystem, in denen Services, Anwendungen und Daten basierend auf den Solid Protokollen frei kombinierbar sind und sich alle Komponenten nur auf ihre wichtigen Funktionalitäten konzentrieren können. 
+
+Dieses Potential möchten wir in einem kurzen Beispiel erläutern. Nehmen wir an, es gibt ein Start-Up Unternehmen mit einer guten Idee für einen neuen Messenger Service, vergleichbar mit WhatsApp oder Telegram. Möchte das Unternehmen im aktuellen zentralisierten System einsteigen, so muss es einige Hürden bewältigen. 
+Als erstes ist der Entwicklungsaufwand relativ hoch - neben der neuen Idee für den Messenger Dienst muss auch noch eine Authentifizierung integriert werden und das Unternehmen muss die Frage klären, wo die Nutzerdaten gespeichert werden sollen und wie sie geschützt werden. Außerdem muss das Startup die entsprechenden Ressourcen dafür bereitstellen und managen. Dies sind alles Schritte, die notwendig wären, um die Anwendung überhaupt verwendbar zu machen. In einem Solid-Ökosystem hingegen, könnte das Unternehmen einfach die Funktionalität des Messenger Dienstes implementieren und den Rest, also das Identitäts- und Datenmanagement, auslagern, an andere Module des Ökosystems. 
+Wenn die Anwendung dann bereit ist, öffentlich gemacht zu werden kommen wir zur weiteren großen Hürde. Beim zentralisierten Datenmanagement können Nutzer:innen nur mit anderen Nutzer:innen die auch einen Account haben kommunizieren. Das heißt, dass der Messenger Dienst erst einmal genug Nutzer:innen überzeugen muss, damit diese einen Account anlegen und über die Anwendung miteinander kommunizieren. In einem Solid-Ökosystem liegen die Daten bei den Nutzer:innen und nicht bei den Anwendungen. Damit kann die Webanwendung schon mit dem/der ersten Nutzer:in verwendet werden - der/die Nutzer:in kann mit anderen Personen kommunizieren ohne das diese die neue Anwendung auch verwenden müssen. Der Nachrichtenverlauf und die Nachrichten selbst sind nicht an die Anwendung gebunden, sondern werden in den Data Pods der Nutzer:innen gespeichert.
+
+%-> Authentifikation oder Identitätsmanagement muss nicht bei jeder Freigabe eingebaut werden
+		%-> Übergabe von einer Solidapp in einer Solidapp
+	%-> Boilerplatecode wird nicht mehr benötigt, da man Apps/Pods zwischenschalten kann
+	%-> Nur der eigentliche Code der Anwendung wird benötigt
+		%-> DSGVO, Authentifizierung, Login etc. können "outgesourced" werden
+		%-> Es entwickelt sich ein Ökosystem
+
+%\todo[inline]{2 Quelle hinzufügen / teilweise selbst geschlussfolgert}
+
+%%Die dezentralisierte Lagerung der Daten ... \cite{8633673}
+
+% Volle Datenkontrolle
+
+\subsection{Datenschutz und -management}
+
+%Data Privacy und Kontrolle durch Nutzer:innen
+Außerdem erlaubt die dezentrale Speicherung der Daten den Nutzer:innen ihre eigenen Daten eigenständig zu verwalten. Dadurch, dass die Nutzer:innen selber entscheiden dürfen, wer auf welche Daten zugreifen darf, und was mit den Daten geschehen darf, wird die Privatsphäre der Nutzer:innen garantiert. Damit geht auch einher, dass die Nutzer:innen ihre Eigentumsrechte vollständig geltend machen können. Die Daten werden auf vertrauenswürdigen Servern oder lokal gehostet und können ihre Besitzer:innen über diese frei verfügen. Es besteht beispielsweise nicht die Möglichkeit, wie dies aktuell der Fall ist, dass mit dem plötzlichen Abschalten einer Social Media Platform, auch die eigenen Daten verloren gehen. Die Nutzer:innen dürfen hierbei auch selbst entscheiden nach welchen Regeln ihre Daten verteilt werden - damit kann die volle Kontrolle der Daten von den Nutzer:innen grundlegend gesichert werden. \cite{yeung2023decentralization}
+
+% Feingranulare Datenzugriffskontrolle
+In einem Solid-Ökosystem wird in der Access Control Policy (ACP) \footnote{\url{https://solidproject.org/TR/acp}} definiert an die sich alle Komponenten des Systems halten müssen. Durch diese ACP kann in RDF für jede Ressource genau festgelegt werden kann, wer auf diese Ressource Zugriff hat. Dies erlaubt eine sehr feingranulare Zugriffskontrolle. Die Nutzer:innen können genau und einfach festlegen welche Anwendung und welche Nutzer:innen Zugriff zu welchen Daten haben.
+
+% Legal Data Ceiling und Zugriff der Unternehmen auf mehr Daten
+Die dezentralisierte Kontrolle der Daten hat auch für seitens der Webanwendungen viele Vorteile. So muss bei der Entwicklung der Anwendung nicht nur die Datenverwaltung nicht mehr beachtet, implementiert und später gewartet und gemanaged werden, da sie ausgelagert ist - die Anwendungen haben tatsächlich mit Solid auch Zugriff auf mehr Daten. Wie Ruben Verborgh, ein Mitglied des Solid Teams, in \cite{MarcoNeumann.2021} erwähnt, ist die Datenspeicherung beim aktuellen Konzept legal eingeschränkt: Unternehmen dürfen nicht alle Daten, die sie erheben könnten auch tatsächlich speichern. Dieses Legal Data Ceiling gibt es nicht, wenn die Nutzer:innen selber entscheiden, welche Daten sie zur Verfügung stellen. Die Daten werden für jede:n Nutzer:in im eigenen Pod gespeichert. Die Pods enthalten damit immer den aktuellen Datenstand und alle Daten befinden sich an einem Ort (wenn so gewünscht von den Nutzer:innen). Dies führt dazu, dass Unternehmen und ihre Webanwendungen Zugriff auf mehr Daten haben können - und die Nutzer:innen haben die volle Kontrolle welche Daten für welche Anwendungen freigegeben sind. Damit einhergehend werden auch die in Kapitel \ref{section:problemeUndGefahrenDesAktuellenZentralisiertenKonzepts} beschriebenen Probleme der Datensilos - veraltete und unvollständige Datensätze - gelöst.
+
+Diese Vorteile möchten wir noch an einem kurzen Beispiel verdeutlichen. Hierfür nehmen wir wieder das vorherige Beispiel in Unterkapitel \ref{subsection:vorteile:skalierbarkeitUndInteroperabilität} her. 
+Nehmen wir an unsere Webanwendung hat eine große Gruppe an Nutzer:innen und wird dann unerwartet offline genommen. Wäre die Webanwendung entsprechend des zentralisierten Konzepts entwickelt und hätte ein eigenes Data Silo mit den Nachrichtenverläufen der Nutzer:innen, dann während diese mit dem Abschalten der Anwendung nur noch schwer zugänglich für die Nutzer:innen. In Solid liegen die Daten in den Data Pods - die Nutzer:innen können einfach einen anderen Messenger Dienst nutzen und einfach weiter chatten - der komplette Chatverlauf bleibt erhalten.
+Erweitern wir unser Beispiel um eine andere Webanwendung - einem Streaming Dienst für Fernsehserien, der auch gerne und viel von Nutzer:innen verwendet wird. Nehmen wir an, in der Anwendung kann eingesehen werden, wie weit ein Nutzer/ eine Nutzer:in bei einer Serie ist. Aufgrund der ACP, die den Nutzer:innen erlaubt genau festzulegen, wer Zugriff auf welche Ressource hat, könnte ein Nutzer/ eine Nutzer:in beispielsweise dem Freundeskreis - alos spezifischen Personen - erlauben, auf diese Daten zuzugreifen, der Allgemeinheit aber nicht. 
+Unsere Messenger Anwendung möchte jetzt Nutzer:innen die Möglichkeit geben über ihre Lieblingsserien mit Gleichgesinnten zu schreiben und sich auszutauschen. Unsere Solid Messenger Anwendung kann die Nutzer:innen einfach um Zugriff auf ihre Lieblingsserien fragen - diese sind in ihren Pods gespeichert, wenn sie beispielsweise den Streaming Dienst nutzen. Mit der Erlaubnis hat unsere Messenger Anwendung direkt alle Daten zu den Lieblingsserien - und diese sind auch aktuell, da alle Anpassungen seitens des Streaming Dienstes im selben Datensatz (Pod) gespeichert werden. Wäre die Webanwendung entsprechend des zentralisierten Konzepts entwickelt, müssten die Nutzer:innen ihre Lieblingsserien händisch im Messengerdienst hinterlegen und updaten - der Datensatz wäre niemals so vollständig und uptodate wie eine automatische Übernahme der Daten.
+
+\label{section:wasSindPotentiellePitfallsUndGefahren}
+\section{Was sind potentielle Pitfalls und Gefahren?}
+
+Im vorherigen Kapitel wurden das Potential und die Vorteile eines Solid-Ökosystems ausführlich betrachtet. Die Technologie hat allerdings noch einige offene Fragestellungen. Deswegen werden im folgenden Kapitel potentielle Pitfalls und Gefahren der Solid-Technologie untersucht. Da die Technologie noch nicht weltweit kommerziell eingesetzt wird, müssen wir hier, basierend auf den entwickelten Prototypen und Einsatzmöglichkeiten, Schlussfolgerungen ziehen.
+
+% Einstiegshürde
+Die erste Herausforderung dieses Konzepts ist, dass nicht genug Nutzer:innen und Entwickler:innen Solid einsetzen wollen, weil es sich um eine neue, unbekannte Technologie handelt, dessen großes Potential erst bei hoher Skalierung wirklich deutlich wird. Zu Beginn bedeutet der Paradigmenwechsel von der zentralisierten zur dezentralisierten Datenspeicherung erst eine große Umstellung für die Nutzer:innen und Entwickler:innen. Die Frage bleibt hier offen, ob die breite Masse bereit ist, sich dieser Umstellung anzuschließen. 
+In  \cite{MarcoNeumann.2021}  geht Ruben Verborgh kurz darauf ein, welche Umstellungen seitens der Entwickler:innen notwendig wären um Solid umzusetzen.
+
+% Datenmissbrauch
+Ein weiteres Problem, welches die positiven Effekte der Technologie einschränken könnte, ist wie die Unternehmen tatsächlich mit den Daten umgehen. So kann es sein, dass Dienste Solid nutzen, um Nutzerdaten einmalig abzurufen und bei sich zu speichern. Auf diese Daten haben die Nutzer:innen dann keinen Zugriff mehr und so können auch wieder zentralisierte Daten Silos entstehen \cite{MarcoNeumann.2021} .
+
+% Referenzen auf veraltete Daten oder Zugriffsrechte fehlen
+Eine offenstehende Problemstellung, von der wir erwarten, dass sie bei der Anwendung der Solid-Technologie auftreten wird, ist, wie mit Referenzen auf Daten umgegangen wird, die es nicht mehr gibt oder für die der Zugriff inzwischen nicht mehr gestattet wird. Quellen, welche sich speziell mit dieser Thematik für Solid auseinandersetzen haben wir in unserer Recherche keine gefunden.
+
+% Performance Issues
+Eine weitere Herausforderung der Solid-Technologie ist die Performance. Die Kommunikation zwischen Anwendung und mehreren Data Pods kann dauern. Das liegt daran, dass zwischen mehr Modulen kommuniziert werden muss, als bei dem zentralisierten Konzept. Die Latenz alleine führt hierbei schnell zu einer schlechteren allgemeinen Performance. Teilweise lässt sich diese Problematik mit dem Einsatz von Aggregatoren und Caching, wodurch die Anzahl an Anfragen und die allgemeine Menge an notwendiger Kommunikation reduziert werden kann, minimieren. Auf diesen Ansatz wird in  ~\cite{MarcoNeumann.2021} weiter eingegangen. Bestehend bleibt die Frage, wie man mit dieser Problemstellung im Fall von Freigabeprozessen (beispielsweise beim Authentifizierungsprozess) umgeht. Für diesen Fall der Herausforderung haben wir noch keinen Lösungsansatz finden können.
+
+%höhere technische Komplexität
+Die hohe Interoperabilität, die in Kapitel \ref{subsection:vorteile:skalierbarkeitUndInteroperabilität} beschrieben wurde erhöht auch die technische Komplexität für die Entwicklung der Webanwendungen. Im zentralisierten System kann man - vereinfacht - davon ausgehen, dass eine Webanwendung mit einem Backend kommuniziert, welches speziell für diese Anwendung implementiert wurde. Mit Solid müssen die Anwendungen mit mehreren Backends und Data Pods kommunizieren, was die Kommunikation komplexer macht. Nicht alle Anwendungen müssen diese komplexe Kommunikation implementieren, da die Funktionalität ausgelagert werden kann, aber an irgendeiner Stelle muss dies doch immer geschehen - und zwar mit der einhergehenden erhöhten Komplexität ~\cite{MarcoNeumann.2021}.
+
+%Grundlegend andere Implementierung von Webanwendungen nötig
+Bei dem Wechsel von dem zentralisierten Datenmanagementkonzept zu einem Solid-Ökosystem handelt es sich um einen strukturellem Wandel. Zuvor kommuniziert eine singuläre Anwendung mit einem singulärem Backend über ein spezifisches Interface, danach kommuniziert eine Anwendung mit mehreren Backends (Data Pods) über die Solid-Protokolle. Dadurch muss diese Kommunikation grundlegend anders implementiert werden. Bei einem Backend mit spezifischen Interface, wie man es beim zentralisierten Konzept findet, kann die entsprechende Webanwendung einfach eine Reihe an fest implementierten, für dieses Interface spezifisch definierten, Anfragen stellen. In einem Solid System weiß die Anwendung aber nicht, von wie vielen Pods sie tatsächlich Daten bezieht, wie viele Interfaces die einzelnen Pods haben und welche sich am Besten für die gewünschten Daten der Anwendung eignen. Für diese Problemstellung gibt es schon einen Lösungsansatz - die Integration einer wiederverwendbaren Query Engine Library, welche zwischen Anwendung und Datapods geschaltet wird und die komplexe Kommunikation für die Webanwendungen übernehmen kann. Ruben Verborgh erklärt diesen Lösungsansatz weiter in  ~\cite{MarcoNeumann.2021}.
+
+\label{section:zukunftsausblick}
+\section{Zukunftsausblick / Einsatzmöglichkeiten der Technologie}
+%Decentralized social networks
+%Blockchain-based platforms for social interaction and content creation and distribution.
+%Decentralized social media networks protect user privacy and enhance data security.
+%Tokens and NFTs create new ways to monetize content.~\footnote{https://ethereum.org/en/social-networks/}
+
+%block-chain based decentralized platforms~\cite{pereira2019blockchain}
+
+%Die dezentralisierte Lagerung von Daten und die Gewährleistung, bestehenden Zugriff auf diese zu halten, ist schon länger ein Thema, an dem geforscht wird. Es wurden einige Lösungsansätze entwickelt, darunter die Speicherung von Daten mithilfe der Distributed-Ledger-Technologie, mittels eines dezentralisiertem Peer-to-Peer Datenspeichers, oder die Kombination beider Technologien, bei dem die Distributed-Ledgers die Integrität der Daten garantieren, während die Daten tatsächlich in mittels Peer-to-Peer gespeichert werden. Bei diesen Ansätzen ist der potentielle Datenverlust, sollte der original Host offline gehen ein bestehendes Problem, für das die Solid-Technology die Lösung sein könnte. Hierbei wird die Distributed-Ledger-Technology in ein Solid-Ökosystem integriert, um die Daten zu verifizieren. ~\cite{ramachandran2020towards}
+
+Die Solid-Technologie und ihr Ökosystem bieten eine Basis für die Weiterentwicklung und Integration anderer Konzepte und Technologien. In diesem Kapitel werden einige schon konzipierte Systeme und Technologien präsentiert, die auf Basis der Solid Protokolle die Fähigkeiten des World Wide Webs neu gedacht haben - zentriert um die Verwirklichung von dezentralisiertem Datenmanagement, voller Kontrolle der Nutzer:innen über ihre Daten und dem Potential des Solid-Ökosystems.
+
+Die erste präsentierte Einsatzmöglichkeit ist die Integration der Distributed-Ledger-Technology in ein Solid-Ökosystem für die Datenverifikation.
+Ein Distributed Ledger ist eine Aufzeichnung, auch Record genannt, von dezentralen Einträgen ohne zentrales Register. Diese Einträge werden in einer Blockchain gesichert. Eine Blockchain kann man sich als eine Reihe an Blöcken vorstellen, von denen jeder einen Eintrag enthält. Die Blöcke speichern auch alle Hashes ihrer Vorgänger (die vorherigen Blöcke in der Reihe) und generieren einen eigenen Hash, basierend auf den gespeicherten Daten. Alle Teilnehmer:innen haben eine Kopie der Blockchain. Wenn ein Eintrag nachträglich geändert wird, so ändert sich der Hash des Blockes in dem der Eintrag gespeichert ist. Somit entspricht der Hash nicht mehr dem in den folgenden Blöcken gespeicherten Hash und die Chain ist gebrochen - es ist für die Teilnehmer:innen offensichtlich, dass die Daten abgeändert wurden. Neue Blöcke können nur mit der Zustimmung der Teilnehmer:innen hinzugefügt werden.
+Durch diese Blockchain-basierte Verifizierung der Daten kann ihre Integrität und damit die Dezentralisierung von Daten und vollständige Kontrolle dieser von den Nutzer:innen gewährleistet werden. ~\cite{ramachandran2020towards}
+
+%Eine weitere naheliegende Einsatzmöglichkeit der Solid-Technologie ist die Entwicklung eines dezentralisierten sozialen Netzwerkes, wie es in ~\cite{yeung2023decentralization} konzipiert wurde.
+
+In ~\cite{meckler2023web} werden Solid Data Spaces (SDS) konzipiert.
+Data Spaces werden von ~\cite{nagel2021design} als dezentralisierte Infrastruktur definiert, in denen ein sicheres Data Sharing und Datenaustausch in einem Daten-Ökosystem basierend auf definierten, gemeinsam bestimmten Grundregeln gegeben ist. In einem Data Space ist Datenhoheit (Data Sovereignty) gewährleistet.
+SDS sollen Data Spaces sein, welche auf dem Semantic Web und Solid aufbauen. Damit geht auch einher, dass es nicht einen einzigen, globalen Data Space geben soll, sondern viel mehr eine Vielzahl an individuellen, flexiblen Data Spaces.
+Das SDS Konzept verwendet mehrere Technologie Schichten (Layer) über die die Kommunikation und Kollaboration geregelt wird. Die Layer sind, von unten nach oben, das Web über welches basierend auf den Standard Protokollen (HTTPS) kommuniziert werden kann, Linked Data, worüber die Datenformate und -repräsentation geregelt werden (zum Beispiel RDF, OWL) mit dem verlinkte Daten abgebildet werden, Solid, was die Protokolle festlegt, mit denen auf Daten zugegriffen und diese bearbeitet werden können und als oberstes Layer die tatsächlichen Data Spaces. In diesem Layer wird unter anderem die Kommunikation zwischen Teilnehmern des Data Spaces geregelt. Das SDS Konzept erlaubt Interoperabilität, sichtbar in den Schichten. So können beispielsweise auf dem Datenlayer verschiedene Datensätze im Data Space verwendet werden, da durch die definierten Regeln Kompatibilität garantiert ist. Genauso ermöglichen die anderen Layer eine hohe Interoperabilität - verschiedene Services, Anwendungen und Pods können miteinander interagieren und ausgetauscht werden. Des Weiteren verspricht SDS die Unabhängigkeit von Autoritäten, Datensouveränität, einfachen Zugriff und einfache Integration.
+%The SDS features interoperability fallbacks, independence from any authorities, easy access, and a low entry threshold - the philosophy that made the Web a success. The SDS picks up the ideas of Linked Data and uses Solid to add features for privacy. We do not aspire a single global dataspace but rather individual fexible dataspaces. The SDS aims to bring data sovereignty to the Web, which benefts many use cases concerning citizens and organizations alike. The motivation is the increasing amount of data with (potentially) great value and impact gathered in our modern world [14]. That data includes private personal data as well as confdential enterprise data.
+
+In~\cite{8633673} wird ConSolid vorgestellt, ein Webservice welcher zur Erzeugung und Verwaltung von Linked Building Data in der Architecture, Engineering, Construction and Operation(AECO)-Industrie dient. Der Service sieht vor, beteiligte Stakeholder in der Durchführung von Bauprojekten zu unterstützen. Um dieses Ziel zu erreichen, stellt der Dienst Möglichkeiten zur Erstellung und Verwaltung von Bauprojektdaten sowie deren Topologie. Ein Rollenmanagementsystem soll den verschiedenen Stakeholdern den interoperablen Datenaustausch ermöglichen und durch geplante Strategien zur Validierung durch z.B. die Shapes Constraint Language (SHACL)\footnote{\url{https://www.w3.org/TR/shacl/}} verbessert werden.
+
+Neben den eben vorgestellten Konzepten, die auf der Solid-Technologie aufbauen, möchten wir noch einen kurzen, abschließenden Ausblick geben, was ein Solid-Ökosystem für das World Wide Web bedeuten könnte, sollten die Protokolle weltweit implementiert werden. 
+\todo[inline]{Abschließende Worte, ganz am Schluss schreiben, Introduction aufgreifen, datensouveränität schlussfolgern}
+
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+\appendix
+
+\end{document}

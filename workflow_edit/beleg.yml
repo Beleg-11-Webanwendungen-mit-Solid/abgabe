@@ -1,5 +1,8 @@
-name: Build LaTeX document
+name: Build Beleg
 on: [push]
+# Make sure the GITHUB_TOKEN has permission to upload to our releases
+permissions:
+  contents: write
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -9,9 +12,17 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: tex/beleg/vorlage.tex
+          working_directory: tex/beleg/
+          root_file: beleg11-webanwendungen-mit-solid.tex
       - name: Upload PDF file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: beleg11-webanwendungen-mit-solid.pdf
+          path: tex/beleg/beleg11-webanwendungen-mit-solid.pdf
+      - name: upload as latest release
+        run: |
+          cd ${{github.workspace}}
+          gh release upload latest tex/beleg/beleg11-webanwendungen-mit-solid.pdf
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash

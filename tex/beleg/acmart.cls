@@ -2780,7 +2780,7 @@
   %\addresses
   %\egroup
   Diese Arbeit wurde im Rahmen des Mastermoduls \glqq Software Engineering\grqq\ (Dozent: Prof. Dr. Andreas Both) an der HTWK Leipzig im Wintersemester 2023/2024 erstellt.
-  }
+  Diese Arbeit ist unter der Lizenz CC0 1.0 Universell freigegeben.}
 \AtEndDocument{\if@ACM@nonacm\else\if@ACM@journal
   \ifx\@authorsaddresses\@empty
   \ClassWarningNoLine{\@classname}{Authors'
