@@ -13,6 +13,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           latexmk_shell_escape: true
+          extra_system_packages: "inkscape"
           working_directory: tex/folien/
           root_file: beleg11-webanwendungen-mit-solid_folien.tex
       - name: Upload PDF file
